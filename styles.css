@@ -31,3 +31,5 @@ th{background:#f8f9ff;color:#686d86;font-weight:600}td{color:#33374b}th,td{borde
 @media(max-width:950px){.learning-layout{grid-template-columns:1fr}}@media(max-width:700px){.section-nav{gap:4px;padding:8px}.section-nav a{font-size:13px;padding:8px 10px}.resource:hover{transform:none}}@media(prefers-reduced-motion:reduce){.resource,.button,.primary,.console-shortcuts>a{transition:none;transform:none!important}}
 /* Keep the stretched link anchored to its card, including while hovered. */
 .action-card .card-link,.action-card .card-link:hover{position:static;transform:none;filter:none}.action-card .card-link::after{z-index:1}
+
+.paper-citation{margin:20px 0;padding:15px 0;border-top:1px solid var(--line)}.paper-citation summary{cursor:pointer;font-size:14px;font-weight:600;color:#526583}.paper-citation p{overflow-wrap:anywhere}.evidence-table{white-space:normal;min-width:620px}.evidence-table td{line-height:1.8;vertical-align:top}.evidence-table td:first-child{width:34%;font-weight:600}
