@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-09-27",
+  "sources": {
+    "mobile": "https://sportsmps.com/samples/report-audit-mobile",
+    "standard": "https://sportsmps.com/samples/pdf-report",
+    "team": "https://sportsmps.com/samples/team-dashboard?birth_year=2012"
+  },
+  "images": [
+    "mobile-growth.png",
+    "mobile-mental.png",
+    "mobile-physical.png",
+    "mobile-summary.png",
+    "standard-01.png",
+    "standard-02.png",
+    "standard-03.png",
+    "standard-04.png",
+    "standard-05.png",
+    "standard-06.png",
+    "standard-07.png",
+    "standard-08.png",
+    "standard-09.png",
+    "standard-10.png",
+    "standard-11.png",
+    "standard-12.png",
+    "team-growth.png",
+    "team-mental.png",
+    "team-physical.png",
+    "team-player.png",
+    "team-summary.png"
+  ],
+  "notes": "공개 샘플 화면. 스탠다드는 실제 브라우저 페이지 영역을 페이지별로 캡처. 모바일은 탭별 전체 내용을 캡처. 실시간 데이터가 아님."
+}

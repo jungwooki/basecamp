@@ -1,0 +1,68 @@
+{
+  "title": "MPS 샘플리포트 스탠다드",
+  "pages": [
+    {
+      "page": 1,
+      "name_replacements": 1,
+      "image": "mps-standard-01.png"
+    },
+    {
+      "page": 2,
+      "name_replacements": 1,
+      "image": "mps-standard-02.png"
+    },
+    {
+      "page": 3,
+      "name_replacements": 0,
+      "image": "mps-standard-03.png"
+    },
+    {
+      "page": 4,
+      "name_replacements": 0,
+      "image": "mps-standard-04.png"
+    },
+    {
+      "page": 5,
+      "name_replacements": 0,
+      "image": "mps-standard-05.png"
+    },
+    {
+      "page": 6,
+      "name_replacements": 2,
+      "image": "mps-standard-06.png"
+    },
+    {
+      "page": 7,
+      "name_replacements": 0,
+      "image": "mps-standard-07.png"
+    },
+    {
+      "page": 8,
+      "name_replacements": 0,
+      "image": "mps-standard-08.png"
+    },
+    {
+      "page": 9,
+      "name_replacements": 0,
+      "image": "mps-standard-09.png"
+    },
+    {
+      "page": 10,
+      "name_replacements": 1,
+      "image": "mps-standard-10.png"
+    },
+    {
+      "page": 11,
+      "name_replacements": 0,
+      "image": "mps-standard-11.png"
+    },
+    {
+      "page": 12,
+      "name_replacements": 0,
+      "image": "mps-standard-12.png"
+    }
+  ],
+  "change": "선수 이름만 샘플로 변경",
+  "image_width": 1800,
+  "validation": "이름 영역 외 원본 대비 픽셀 변화 없음"
+}
