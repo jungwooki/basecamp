@@ -395,7 +395,7 @@ window.MPS_GUIDES={
   },
   "mental": {
     "title": "멘탈 심화 리포트 설명 가이드",
-    "source": "../2026mental/index.html",
+    "source": "resources/2026mental2/index.html",
     "description": "기존 4페이지 심화 샘플 · 전문 용어에서 부모님 설명까지",
     "pages": [
       {
@@ -418,7 +418,7 @@ window.MPS_GUIDES={
         ],
         "say": "준비를 꼼꼼히 하는 강점이 보이는 유형입니다. 이 강점을 살려 실수 뒤 다시 돌아오는 경험을 함께 쌓아볼 수 있어요.",
         "check": "골연령을 심리적 나이로 설명하지 않습니다. 유명 선수 예시는 실제 심리검사 결과가 아닙니다.",
-        "image": "../2026mpssports_football/assets/reports/mental-01.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/mental-01.jpg"
       },
       {
         "title": "마음의 강점과 다음 연습",
@@ -440,7 +440,7 @@ window.MPS_GUIDES={
         ],
         "say": "준비하는 힘은 강점이에요. 이번에는 아쉬운 결과 뒤 다음 훈련에 다시 참여한 장면을 함께 알아봐 주세요.",
         "check": "화면의 선수·평균·지수는 가상 샘플입니다. 실제 전국 통계로 소개하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/mental-02.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/mental-02.jpg"
       },
       {
         "title": "8대 세부지표 · 비교 기준 구분",
@@ -466,7 +466,7 @@ window.MPS_GUIDES={
         ],
         "say": "다른 아이와 비교한 위치와 지난번보다 달라진 점은 따로 볼게요. 평균 아래여도 이전보다 좋아진 부분이 있을 수 있어요.",
         "check": "향상 화살표는 통계적 유의성이나 프로그램 효과를 입증하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/mental-03.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/mental-03.jpg"
       },
       {
         "title": "보호자·지도자가 함께하는 지원",
@@ -488,7 +488,7 @@ window.MPS_GUIDES={
         ],
         "say": "다시 시도한 순간을 알아봐 주세요. 부모님과 코치가 같은 목표를 공유하면 아이도 무엇을 연습할지 더 쉽게 이해할 수 있어요.",
         "check": "점수로 아이를 고정된 성격 유형에 가두거나 비교·낙인찍지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/mental-04.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/mental-04.jpg"
       }
     ],
     "mobile": false,
@@ -498,7 +498,7 @@ window.MPS_GUIDES={
   },
   "physical": {
     "title": "피지컬 심화 리포트 설명 가이드",
-    "source": "../2026physical/index.html",
+    "source": "resources/2026physical/index.html",
     "description": "기존 4페이지 심화 샘플 · 전문 용어에서 부모님 설명까지",
     "pages": [
       {
@@ -521,7 +521,7 @@ window.MPS_GUIDES={
         ],
         "say": "점수 변화와 실제 피로를 함께 확인해 보겠습니다. 좋아진 수치가 있어도 반복되는 불편함이 있는지 같이 듣겠습니다.",
         "check": "심화의 RED-S 항목은 높을수록 관리필요입니다. 모바일의 방향과 다르므로 두 점수를 직접 비교하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/physical-01.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/physical-01.jpg"
       },
       {
         "title": "체수분·자율신경·초음파",
@@ -547,7 +547,7 @@ window.MPS_GUIDES={
         ],
         "say": "검사마다 보는 내용이 달라요. 수분 비율, 자율신경 기록, 초음파를 함께 살펴보고 같은 쪽에 실제 불편함이 있는지 확인하겠습니다.",
         "check": "가상 결합지수와 임시 임계값은 임상 기준이 아닙니다. “추후 제공 예정” 항목을 측정 완료로 소개하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/physical-02.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/physical-02.jpg"
       },
       {
         "title": "움직임과 수행능력",
@@ -573,7 +573,7 @@ window.MPS_GUIDES={
         ],
         "say": "높이 뛰는 것뿐 아니라 좌우가 어떻게 움직이고 불편함은 없는지도 중요해요. 같은 방식으로 다시 측정하며 변화를 보겠습니다.",
         "check": "수행검사·기준값은 가상 예시입니다. 관찰 비중 1–5를 훈련 강도나 재능 점수로 바꾸지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/physical-03.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/physical-03.jpg"
       },
       {
         "title": "보호자 안내와 다음 연결",
@@ -595,7 +595,7 @@ window.MPS_GUIDES={
         ],
         "say": "훈련 후 몸이 어떻게 느껴지는지 아이의 말로 적어 주세요. 검사 결과를 담당자가 확인한 뒤 개별 운동 계획으로 연결하겠습니다.",
         "check": "이 페이지는 자동 안내 초안입니다. 담당자 승인·서명이나 개별 처방이 완료된 것으로 말하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/physical-04.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/physical-04.jpg"
       }
     ],
     "mobile": false,
@@ -605,7 +605,7 @@ window.MPS_GUIDES={
   },
   "growth": {
     "title": "성장체질 심화 리포트 설명 가이드",
-    "source": "../2026growth/index.html",
+    "source": "resources/2026growth/index.html",
     "description": "기존 5페이지 심화 샘플 · 전문 용어에서 부모님 설명까지",
     "pages": [
       {
@@ -628,7 +628,7 @@ window.MPS_GUIDES={
         ],
         "say": "부모 키를 바탕으로 한 참고값과 현재 성장 자료의 예상 범위는 계산의 출발점이 달라요. 둘을 확정된 최종키처럼 보지는 않습니다.",
         "check": "샘플의 단계 번호를 다른 리포트에 그대로 대입하지 말고 단계 이름과 정의를 확인합니다.",
-        "image": "../2026mpssports_football/assets/reports/growth-01.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/growth-01.jpg"
       },
       {
         "title": "성장체질 · 쉬운 말로 읽기",
@@ -654,7 +654,7 @@ window.MPS_GUIDES={
         ],
         "say": "이름이 어려워도 아이가 언제 피곤하고 어떤 상황에서 몸이 무겁거나 긴장되는지 듣는 출발점으로 이해하시면 됩니다.",
         "check": "체질 경향을 질병 확진이나 성장 가능성 점수로 말하지 않습니다. 생의학적 영양결핍 등을 확정하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/growth-02.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/growth-02.jpg"
       },
       {
         "title": "수면·회복과 운동 부담",
@@ -680,7 +680,7 @@ window.MPS_GUIDES={
         ],
         "say": "팀 훈련 외에 개인훈련과 경기까지 함께 봐야 해요. 아이가 얼마나 힘들었는지와 실제로 잘 시간이 충분했는지도 같이 확인할게요.",
         "check": "해외 아카데미 평균은 개인별 처방이 아닙니다. 같은 시간이라도 강도와 회복 조건이 다릅니다.",
-        "image": "../2026mpssports_football/assets/reports/growth-03.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/growth-03.jpg"
       },
       {
         "title": "식이영양 · 하루 총량과 일정",
@@ -702,7 +702,7 @@ window.MPS_GUIDES={
         ],
         "say": "이 양은 샘플 선수의 체중과 일정 기준이에요. 한 번에 먹으라는 뜻이 아니라 식사와 간식으로 나누어 챙기는 흐름을 보겠습니다.",
         "check": "샘플의 탄수화물·단백질 양을 다른 선수에게 그대로 적용하지 않습니다. 개인별 조정은 담당자에게 확인합니다.",
-        "image": "../2026mpssports_football/assets/reports/growth-04.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/growth-04.jpg"
       },
       {
         "title": "부모님께 · 실천과 재점검",
@@ -724,7 +724,7 @@ window.MPS_GUIDES={
         ],
         "say": "이번 주는 아침 식사와 잠잘 시간부터 함께 확인해 볼까요? 완벽히 지켰는지보다 어떤 날 어려웠는지 적어 주시면 다음 상담에 도움이 됩니다.",
         "check": "샘플의 식사 목표·0.9시간·다음 날짜를 모든 선수에게 동일하게 요구하지 않습니다.",
-        "image": "../2026mpssports_football/assets/reports/growth-05.jpg"
+        "image": "resources/2026mpssports_football/assets/reports/growth-05.jpg"
       }
     ],
     "mobile": false,
@@ -1111,7 +1111,7 @@ window.MPS_GUIDES={
   },
   "mental-program": {
     "title": "인증 멘탈강화프로그램 안내",
-    "source": "../haeonsports/indexmental.html",
+    "source": "resources/haeonsports/indexmental.html",
     "description": "한 단계씩 설명하고, 담당자와 다음 행동을 확인합니다.",
     "pages": [
       {

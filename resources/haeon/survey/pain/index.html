@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한의원 통증재활 진료설문지</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2canvas for Image Export -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Font Awesome for simple icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1866e1', // 로얄 아주르
+                        primaryHover: '#1455bd',
+                        surface: '#ffffff',
+                        background: '#f4f5f7', // 레몬베이스 느낌의 차분한 배경
+                        border: '#e1e4e8',
+                        textMain: '#111827',
+                        textSub: '#4b5563'
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f4f5f7;
+            color: #111827;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* 입력창 포커스 효과 제거 */
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(24, 102, 225, 0.2);
+        }
+        /* 스크롤바 스타일링 (깔끔하게) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- 데이터 옵션 정의 ---
+        const OPTIONS = {
+            locations: ['목 (뒷목/거북목)', '어깨', '등', '허리', '골반/엉덩이', '팔/손가락', '다리/발가락', '머리 (두통)', '가슴/복부', '전신'],
+            causes: ['넘어지거나 다침 (외상)', '평소에 무리하게 사용함', '스트레스/과로', '특별한 계기 모름'],
+            durations: ['최근 며칠 이내', '1~4주 전', '1~6개월 전', '6개월 이상 (만성)'],
+            painTypes: ['쑤신다 (뻐근함)', '욱신거린다 (맥박뛰듯)', '찌른다 (칼로 베는듯)', '저리다 (전기 오듯)', '시리다 (차가운 느낌)', '화끈거린다 (뜨거운 느낌)', '무겁다 (돌을 얹은듯)', '힘이 빠진다'],
+            worseWhen: ['가만히 있을 때', '움직일 때', '아침에 일어났을 때', '밤에 잘 때', '날씨가 궂을 때', '스트레스 받을 때'],
+            betterWhen: ['휴식을 취할 때', '따뜻한 찜질을 할 때', '차가운 찜질을 할 때', '가볍게 움직일 때'],
+            generalHealth: ['소화가 잘 안되거나 체함', '잠들기 어렵거나 자주 깸', '피로감을 자주 느낌', '가슴이 두근거리거나 답답함', '손발이 차고 저림', '소변이 불편함 (빈뇨/잔뇨)']
+        };
+
+        const TOTAL_STEPS = 5; // 문진 4페이지 + 결과 1페이지
+
+        function App() {
+            // --- 상태 관리 ---
+            const [step, setStep] = useState(1);
+            const [formData, setFormData] = useState({
+                name: '',
+                locations: [],
+                cause: '',
+                duration: '',
+                painCurrent: null,
+                painWorst: null,
+                painTypes: [],
+                worseWhen: [],
+                betterWhen: [],
+                generalHealth: [],
+            });
+
+            const resultRef = useRef(null); // 캡처를 위한 영역 참조
+
+            // --- 자동 저장 로직 ---
+            useEffect(() => {
+                const savedData = localStorage.getItem('clinic_survey_data_v3');
+                const savedStep = localStorage.getItem('clinic_survey_step_v3');
+                if (savedData) setFormData(JSON.parse(savedData));
+                if (savedStep) setStep(parseInt(savedStep, 10));
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('clinic_survey_data_v3', JSON.stringify(formData));
+                localStorage.setItem('clinic_survey_step_v3', step.toString());
+            }, [formData, step]);
+
+            // --- 핸들러 함수 ---
+            const handleNext = () => {
+                // 1단계에서 이름 미입력 시 통과 불가
+                if (step === 1 && !formData.name.trim()) {
+                    alert('성함을 입력해주세요.');
+                    return;
+                }
+                if (step < TOTAL_STEPS) {
+                    window.scrollTo(0, 0);
+                    setStep(prev => prev + 1);
+                }
+            };
+
+            const handlePrev = () => {
+                if (step > 1) {
+                    window.scrollTo(0, 0);
+                    setStep(prev => prev - 1);
+                }
+            };
+
+            const handleReset = () => {
+                if (confirm('설문을 처음부터 다시 시작하시겠습니까?')) {
+                    const initialData = {
+                        name: '', locations: [], cause: '', duration: '', painCurrent: null,
+                        painWorst: null, painTypes: [], worseWhen: [], betterWhen: [], generalHealth: []
+                    };
+                    setFormData(initialData);
+                    setStep(1);
+                    localStorage.removeItem('clinic_survey_data_v3');
+                    localStorage.removeItem('clinic_survey_step_v3');
+                }
+            };
+
+            const toggleMultiSelect = (field, value) => {
+                setFormData(prev => {
+                    const currentList = prev[field];
+                    if (currentList.includes(value)) {
+                        return { ...prev, [field]: currentList.filter(item => item !== value) };
+                    } else {
+                        return { ...prev, [field]: [...currentList, value] };
+                    }
+                });
+            };
+
+            const setSingleSelect = (field, value) => {
+                setFormData(prev => ({ ...prev, [field]: value }));
+            };
+
+            // --- 엑스포트(저장) 기능 ---
+            const downloadImage = async () => {
+                if (!resultRef.current) return;
+                try {
+                    const canvas = await html2canvas(resultRef.current, { scale: 2, backgroundColor: '#ffffff' });
+                    const link = document.createElement('a');
+                    link.download = `${formData.name || '환자'}_문진결과.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                } catch (error) {
+                    alert('이미지 저장 중 오류가 발생했습니다.');
+                    console.error(error);
+                }
+            };
+
+            const downloadText = () => {
+                const textContent = `
+[통증 재활 클리닉 진료 설문 결과]
+환자 성함: ${formData.name}
+
+1. 불편한 부위
+- ${formData.locations.length > 0 ? formData.locations.join(', ') : '미선택'}
+
+2. 통증 시작 시기 및 계기
+- 시기: ${formData.duration || '미선택'}
+- 계기: ${formData.cause || '미선택'}
+
+3. 통증 강도 (0~10)
+- 현재 통증: ${formData.painCurrent ?? '미선택'}
+- 가장 심할 때: ${formData.painWorst ?? '미선택'}
+
+4. 통증의 느낌
+- ${formData.painTypes.length > 0 ? formData.painTypes.join(', ') : '미선택'}
+
+5. 악화 및 완화 요인
+- 악화: ${formData.worseWhen.length > 0 ? formData.worseWhen.join(', ') : '미선택'}
+- 완화: ${formData.betterWhen.length > 0 ? formData.betterWhen.join(', ') : '미선택'}
+
+6. 전반적 컨디션 및 기타 증상
+- ${formData.generalHealth.length > 0 ? formData.generalHealth.join(', ') : '미선택'}
+                `.trim();
+
+                const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+                const link = document.createElement('a');
+                link.download = `${formData.name || '환자'}_문진결과.txt`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            };
+
+
+            // --- UI 컴포넌트 ---
+            const ProgressBar = () => (
+                <div className="flex items-center gap-2 mb-8">
+                    {[1, 2, 3, 4, 5].map(s => (
+                        <div key={s} className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+                            <div 
+                                className={`h-full transition-all duration-300 ${s <= step ? 'bg-primary' : ''}`}
+                            ></div>
+                        </div>
+                    ))}
+                    <span className="ml-2 text-sm font-medium text-gray-500 whitespace-nowrap">Step {step} of 5</span>
+                </div>
+            );
+
+            // 선택 버튼 (다중/단일 공통 - 모던한 스타일)
+            const OptionButton = ({ label, isSelected, onClick }) => (
+                <button
+                    onClick={onClick}
+                    className={`w-full p-3 md:p-4 text-base md:text-lg rounded-xl border-2 text-left transition-colors duration-150 flex items-center justify-between
+                        ${isSelected 
+                            ? 'bg-[#f0f5fc] border-primary text-primary font-medium' 
+                            : 'bg-white border-border text-textMain hover:border-gray-300'
+                        }`}
+                >
+                    <span>{label}</span>
+                    {isSelected && <i className="fas fa-check text-primary"></i>}
+                </button>
+            );
+
+            // 강도 척도 컴포넌트
+            const NumberScale = ({ value, onChange, label }) => (
+                <div className="mb-6">
+                    <h4 className="text-base font-semibold text-textMain mb-3">{label}</h4>
+                    <div className="flex justify-between items-center gap-1 md:gap-2">
+                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                            <button
+                                key={num}
+                                onClick={() => onChange(num)}
+                                className={`w-10 h-10 md:w-12 md:h-12 rounded-lg text-lg font-medium border-2 flex items-center justify-center transition-colors
+                                    ${value === num 
+                                        ? 'bg-primary border-primary text-white shadow-sm' 
+                                        : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                                    }`}
+                            >
+                                {num}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex justify-between text-sm text-textSub mt-2 px-1">
+                        <span>안 아픔 (0)</span>
+                        <span>매우 심함 (10)</span>
+                    </div>
+                </div>
+            );
+
+            // 섹션 헤더
+            const SectionHeader = ({ title, desc }) => (
+                <div className="mb-4 pb-2 border-b border-gray-100">
+                    <h3 className="text-xl font-bold text-textMain">{title}</h3>
+                    {desc && <p className="text-sm text-textSub mt-1">{desc}</p>}
+                </div>
+            );
+
+            // --- 스텝별 화면 랜더링 ---
+            const renderStep = () => {
+                switch (step) {
+                    case 1:
+                        return (
+                            <div className="flex flex-col items-center justify-center py-12 animate-fade-in h-full">
+                                <div className="w-20 h-20 bg-[#f0f5fc] text-primary rounded-full flex items-center justify-center mb-6">
+                                    <i className="fas fa-notes-medical text-3xl"></i>
+                                </div>
+                                <h2 className="text-2xl font-bold text-textMain mb-3">환영합니다!</h2>
+                                <p className="text-textSub text-center mb-10 leading-relaxed">
+                                    정확하고 빠른 진료를 위해 몇 가지 질문을 드리겠습니다.<br/>
+                                    먼저 원활한 안내를 위해 성함을 입력해주세요.
+                                </p>
+                                
+                                <div className="w-full max-w-sm">
+                                    <label className="block text-sm font-semibold text-textMain mb-2">환자 성함</label>
+                                    <input 
+                                        type="text" 
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                        placeholder="이름을 입력하세요" 
+                                        className="w-full px-5 py-4 border border-border rounded-xl text-lg text-textMain transition-all"
+                                        autoComplete="off"
+                                    />
+                                </div>
+                            </div>
+                        );
+                    case 2:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionHeader 
+                                        title="1. 어디가 가장 불편하신가요?" 
+                                        desc="아프거나 불편한 부위를 모두 선택해주세요." 
+                                    />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        {OPTIONS.locations.map(loc => (
+                                            <OptionButton key={loc} label={loc} isSelected={formData.locations.includes(loc)} onClick={() => toggleMultiSelect('locations', loc)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <SectionHeader title="2. 언제, 어떤 계기로 시작되었나요?" />
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h4 className="text-sm font-semibold text-textMain mb-3">발생 시기 (단일 선택)</h4>
+                                            <div className="flex flex-col gap-2">
+                                                {OPTIONS.durations.map(dur => (
+                                                    <OptionButton key={dur} label={dur} isSelected={formData.duration === dur} onClick={() => setSingleSelect('duration', dur)} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-sm font-semibold text-textMain mb-3">발생 계기 (다중 선택)</h4>
+                                            <div className="flex flex-col gap-2">
+                                                {OPTIONS.causes.map(cause => (
+                                            <OptionButton key={type} label={type} isSelected={formData.painTypes.includes(type)} onClick={() => toggleMultiSelect('painTypes', type)} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 3:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionHeader 
+                                        title="3. 통증의 강도는 어느 정도인가요?" 
+                                        desc="전혀 안 아프면 0, 가장 심한 고통을 10으로 표시해주세요." 
+                                    />
+                                    <NumberScale label="현재 느끼는 통증 강도" value={formData.painCurrent} onChange={(v) => setSingleSelect('painCurrent', v)} />
+                                    <NumberScale label="가장 심할 때의 통증 강도" value={formData.painWorst} onChange={(v) => setSingleSelect('painWorst', v)} />
+                                </div>
+
+                                <div>
+                                    <SectionHeader 
+                                        title="4. 어떤 느낌의 통증인가요?" 
+                                        desc="해당하는 느낌을 모두 선택해주세요." 
+                                    />
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {OPTIONS.painTypes.map(type => (
+                                            <OptionButton key={type} label={type} isSelected={formData.painTypes.includes(type)} onClick={() => toggleMultiSelect('painTypes', type)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 4:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionHeader 
+                                        title="5. 증상에 영향을 주는 요인이 있나요?" 
+                                    />
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h4 className="text-sm font-semibold text-textMain mb-3 text-red-600">이럴 때 더 아파요 (다중 선택)</h4>
+                                            <div className="flex flex-col gap-2">
+                                                {OPTIONS.worseWhen.map(item => (
+                                                    <OptionButton key={item} label={item} isSelected={formData.worseWhen.includes(item)} onClick={() => toggleMultiSelect('worseWhen', item)} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-sm font-semibold text-textMain mb-3 text-primary">이럴 때 편안해져요 (다중 선택)</h4>
+                                            <div className="flex flex-col gap-2">
+                                                {OPTIONS.betterWhen.map(item => (
+                                                    <OptionButton key={item} label={item} isSelected={formData.betterWhen.includes(item)} onClick={() => toggleMultiSelect('betterWhen', item)} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <SectionHeader 
+                                        title="6. 전반적인 컨디션은 어떠신가요?" 
+                                        desc="평소 불편함을 느끼는 증상을 모두 선택해주세요." 
+                                    />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        {OPTIONS.generalHealth.map(item => (
+                                            <OptionButton key={item} label={item} isSelected={formData.generalHealth.includes(item)} onClick={() => toggleMultiSelect('generalHealth', item)} />
+                                        ))}
+                                        <button
+                                            onClick={() => {
+                                                if(formData.generalHealth.includes('특별히 없음')) {
+                                                    setFormData(prev => ({...prev, generalHealth: []}));
+                                                } else {
+                                                    setFormData(prev => ({...prev, generalHealth: ['특별히 없음']}));
+                                                }
+                                            }}
+                                            className={`w-full p-3 md:p-4 text-base md:text-lg rounded-xl border-2 text-left flex items-center justify-between
+                                                ${formData.generalHealth.includes('특별히 없음') 
+                                                    ? 'bg-gray-100 border-gray-300 text-gray-700 font-medium' 
+                                                    : 'bg-white border-border text-textMain hover:border-gray-300'
+                                                }`}
+                                        >
+                                            <span>해당 없음</span>
+                                            {formData.generalHealth.includes('특별히 없음') && <i className="fas fa-check text-gray-500"></i>}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 5: // 결과 및 엑스포트 화면
+                        return (
+                            <div className="animate-fade-in">
+                                <div className="text-center mb-8">
+                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-[#e6f4ea] text-green-600 rounded-full mb-4">
+                                        <i className="fas fa-check text-3xl"></i>
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-textMain">설문 작성이 완료되었습니다!</h2>
+                                    <p className="text-textSub mt-2">입력된 정보를 확인하시고 원하시는 방식으로 저장해주세요.</p>
+                                </div>
+
+                                {/* 캡처될 영역 */}
+                                <div 
+                                    ref={resultRef}
+                                    className="bg-white border border-border rounded-xl p-8 mb-8 shadow-sm"
+                                    style={{ padding: '40px' }} // 캡처 시 여백 강제 확보
+                                >
+                                    <div className="border-b-2 border-primary pb-4 mb-6">
+                                        <h3 className="text-xl font-bold text-primary">진료 설문 결과표</h3>
+                                        <p className="text-sm text-textSub mt-1">작성자: <span className="font-semibold text-textMain">{formData.name}</span></p>
+                                    </div>
+
+                                    <div className="space-y-4 text-sm md:text-base">
+                                        <div className="flex">
+                                            <span className="w-1/3 text-textSub font-medium">1. 불편한 부위</span>
+                                            <span className="w-2/3 text-textMain font-semibold">{formData.locations.length > 0 ? formData.locations.join(', ') : '-'}</span>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="w-1/3 text-textSub font-medium">2. 시기 및 계기</span>
+                                            <span className="w-2/3 text-textMain font-semibold">{formData.duration || '-'} / {formData.cause || '-'}</span>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="w-1/3 text-textSub font-medium">3. 통증 강도</span>
+                                            <span className="w-2/3 text-textMain font-semibold">현재 {formData.painCurrent ?? '-'} / 최고 {formData.painWorst ?? '-'}</span>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="w-1/3 text-textSub font-medium">4. 통증 느낌</span>
+                                            <span className="w-2/3 text-textMain font-semibold">{formData.painTypes.length > 0 ? formData.painTypes.join(', ') : '-'}</span>
+                                        </div>
+                                        <div className="flex border-t border-gray-100 pt-4 mt-2">
+                                            <span className="w-1/3 text-textSub font-medium">5. 악화 요인</span>
+                                            <span className="w-2/3 text-textMain">{formData.worseWhen.length > 0 ? formData.worseWhen.join(', ') : '-'}</span>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="w-1/3 text-textSub font-medium">6. 완화 요인</span>
+                                            <span className="w-2/3 text-textMain">{formData.betterWhen.length > 0 ? formData.betterWhen.join(', ') : '-'}</span>
+                                        </div>
+                                        <div className="flex border-t border-gray-100 pt-4 mt-2">
+                                            <span className="w-1/3 text-textSub font-medium">7. 기타 컨디션</span>
+                                            <span className="w-2/3 text-textMain">{formData.generalHealth.length > 0 ? formData.generalHealth.join(', ') : '-'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 저장 및 조작 버튼 그룹 */}
+                                <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+                                    <button 
+                                        onClick={downloadText}
+                                        className="py-3 px-4 bg-white border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 flex items-center justify-center gap-2 transition-colors"
+                                    >
+                                        <i className="far fa-file-alt"></i> 텍스트로 저장
+                                    </button>
+                                    <button 
+                                        onClick={downloadImage}
+                                        className="py-3 px-4 bg-primary text-white rounded-lg font-medium hover:bg-primaryHover flex items-center justify-center gap-2 transition-colors shadow-sm"
+                                    >
+                                        <i className="far fa-image"></i> 이미지로 저장
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    default:
+                        return null;
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-3xl w-full">
+                        
+                        {/* 헤더 로고 영역 */}
+                        <div className="mb-4">
+                            <h1 className="text-xl md:text-2xl font-bold text-textMain flex items-center gap-2">
+                                <span className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center text-sm">
+                                    <i className="fas fa-plus"></i>
+                                </span>
+                                통증 재활 클리닉
+                            </h1>
+                        </div>
+
+                        {/* 메인 폼 카드 (레몬베이스 스타일) */}
+                        <div className="bg-surface rounded-2xl shadow-card p-6 md:p-8 min-h-[480px] flex flex-col border border-border">
+                            
+                            <ProgressBar />
+
+                            <div className="flex-grow">
+                                {renderStep()}
+                            </div>
+
+                            {/* 하단 네비게이션 */}
+                            {step < TOTAL_STEPS && (
+                                <div className="mt-8 flex justify-between items-center pt-6 border-t border-border">
+                                    {step > 1 ? (
+                                        <button
+                                            onClick={handlePrev}
+                                            className="px-6 py-3 rounded-lg text-textMain font-medium hover:bg-gray-100 transition-colors"
+                                        >
+                                            이전
+                                        </button>
+                                    ) : <div></div>} {/* flex space 유지를 위한 빈 div */}
+
+                                    <button
+                                        onClick={handleNext}
+                                        className="px-8 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primaryHover transition-colors shadow-sm"
+                                    >
+                                        {step === TOTAL_STEPS - 1 ? '결과 확인하기' : '다음 단계'}
+                                    </button>
+                                </div>
+                            )}
+
+                            {step === TOTAL_STEPS && (
+                                <div className="mt-6 text-center pt-4 border-t border-border">
+                                    <button 
+                                        onClick={handleReset}
+                                        className="text-sm text-textSub hover:text-red-500 underline transition-colors"
+                                    >
+                                        설문 처음부터 다시 작성하기
+                                    </button>
+                                </div>
+                            )}
+
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

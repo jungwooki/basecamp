@@ -1,0 +1,1554 @@
+{
+  "files": 339,
+  "resource_files": 300,
+  "copied_bytes": 209501806,
+  "mapping": {
+    "mps_basecamp/center.html": "center.html",
+    "mps_basecamp/styles.css": "styles.css",
+    "mps_basecamp/assets/PretendardVariable.woff2": "assets/PretendardVariable.woff2",
+    "mps_basecamp/assets/mps-logo-black.png": "assets/mps-logo-black.png",
+    "mps_basecamp/index.html": "index.html",
+    "mps_basecamp/athletes.html": "athletes.html",
+    "mps_basecamp/clinic.html": "clinic.html",
+    "mps_basecamp/mental.html": "mental.html",
+    "mps_basecamp/nextlocal.html": "nextlocal.html",
+    "@nextlocal/스포츠뉴트리션프로젝트_넥스트로컬40_진행상황.html": "resources/@nextlocal/스포츠뉴트리션프로젝트_넥스트로컬40_진행상황.html",
+    "mps_basecamp/data.js": "data.js",
+    "2026mental2/index.html": "resources/2026mental2/index.html",
+    "2026mental2/assets/mps-logo-black.png": "resources/2026mental2/assets/mps-logo-black.png",
+    "2026mental2/assets/growth-mental-watercolor-v4.png": "resources/2026mental2/assets/growth-mental-watercolor-v4.png",
+    "2026mental2/assets/mps-team-doctor-mental-coach.png": "resources/2026mental2/assets/mps-team-doctor-mental-coach.png",
+    "2026mental2/MPS_멘탈포지션_A4_3페이지_리포트_v3.html": "resources/2026mental2/MPS_멘탈포지션_A4_3페이지_리포트_v3.html",
+    "2026mental2/MPS_멘탈_통합_유형별_분석.html": "resources/2026mental2/MPS_멘탈_통합_유형별_분석.html",
+    "2026mental2/멘탈_유형별_평균.csv": "resources/2026mental2/멘탈_유형별_평균.csv",
+    "2026mental2/멘탈_분석대상_검수.csv": "resources/2026mental2/멘탈_분석대상_검수.csv",
+    "2026mental2/MPS_멘탈포지션_8유형_v2.xlsx": "resources/2026mental2/MPS_멘탈포지션_8유형_v2.xlsx",
+    "2026mental2/assets/growth-support-watercolor-v4.png": "resources/2026mental2/assets/growth-support-watercolor-v4.png",
+    "2026mental2/assets/players/active-player-15.jpg": "resources/2026mental2/assets/players/active-player-15.jpg",
+    "2026mental2/assets/players/active-player-01.jpg": "resources/2026mental2/assets/players/active-player-01.jpg",
+    "2026mental2/assets/players/sources.json": "resources/2026mental2/assets/players/sources.json",
+    "2026mental2/assets/players/player-19.jpg": "resources/2026mental2/assets/players/player-19.jpg",
+    "2026mental2/assets/players/player-18.jpg": "resources/2026mental2/assets/players/player-18.jpg",
+    "2026mental2/assets/players/player-24.jpg": "resources/2026mental2/assets/players/player-24.jpg",
+    "2026mental2/assets/players/active-player-13.jpg": "resources/2026mental2/assets/players/active-player-13.jpg",
+    "2026mental2/assets/players/player-08.jpg": "resources/2026mental2/assets/players/player-08.jpg",
+    "2026mental2/assets/players/player-20.jpg": "resources/2026mental2/assets/players/player-20.jpg",
+    "2026mental2/assets/players/player-21.jpg": "resources/2026mental2/assets/players/player-21.jpg",
+    "2026mental2/assets/players/player-09.jpg": "resources/2026mental2/assets/players/player-09.jpg",
+    "2026mental2/assets/players/active-player-12.jpg": "resources/2026mental2/assets/players/active-player-12.jpg",
+    "2026mental2/assets/players/active-player-06.jpg": "resources/2026mental2/assets/players/active-player-06.jpg",
+    "2026mental2/assets/players/active-player-10.jpg": "resources/2026mental2/assets/players/active-player-10.jpg",
+    "2026mental2/assets/players/player-23.jpg": "resources/2026mental2/assets/players/player-23.jpg",
+    "2026mental2/assets/players/player-22.jpg": "resources/2026mental2/assets/players/player-22.jpg",
+    "2026mental2/assets/players/active-player-05.jpg": "resources/2026mental2/assets/players/active-player-05.jpg",
+    "2026mental2/assets/players/active-player-11.jpg": "resources/2026mental2/assets/players/active-player-11.jpg",
+    "2026mental2/assets/players/imageinfo.json": "resources/2026mental2/assets/players/imageinfo.json",
+    "2026mental2/assets/players/sources-before-field.json": "resources/2026mental2/assets/players/sources-before-field.json",
+    "2026mental2/assets/players/active-player-08.jpg": "resources/2026mental2/assets/players/active-player-08.jpg",
+    "2026mental2/assets/players/player-13.png": "resources/2026mental2/assets/players/player-13.png",
+    "2026mental2/assets/players/player-07.jpg": "resources/2026mental2/assets/players/player-07.jpg",
+    "2026mental2/assets/players/player-06.jpg": "resources/2026mental2/assets/players/player-06.jpg",
+    "2026mental2/assets/players/player-12.jpg": "resources/2026mental2/assets/players/player-12.jpg",
+    "2026mental2/assets/players/active-player-09.jpg": "resources/2026mental2/assets/players/active-player-09.jpg",
+    "2026mental2/assets/players/player-04.jpg": "resources/2026mental2/assets/players/player-04.jpg",
+    "2026mental2/assets/players/player-10.jpg": "resources/2026mental2/assets/players/player-10.jpg",
+    "2026mental2/assets/players/player-11.jpg": "resources/2026mental2/assets/players/player-11.jpg",
+    "2026mental2/assets/players/player-05.jpg": "resources/2026mental2/assets/players/player-05.jpg",
+    "2026mental2/assets/players/player-01.jpg": "resources/2026mental2/assets/players/player-01.jpg",
+    "2026mental2/assets/players/player-15.jpg": "resources/2026mental2/assets/players/player-15.jpg",
+    "2026mental2/assets/players/player-14.jpg": "resources/2026mental2/assets/players/player-14.jpg",
+    "2026mental2/assets/players/active-player-19.jpg": "resources/2026mental2/assets/players/active-player-19.jpg",
+    "2026mental2/assets/players/player-16.jpg": "resources/2026mental2/assets/players/player-16.jpg",
+    "2026mental2/assets/players/player-02.jpg": "resources/2026mental2/assets/players/player-02.jpg",
+    "2026mental2/assets/players/player-03.jpg": "resources/2026mental2/assets/players/player-03.jpg",
+    "2026mental2/assets/players/player-17.jpg": "resources/2026mental2/assets/players/player-17.jpg",
+    "2026mental2/assets/players/active-player-18.jpg": "resources/2026mental2/assets/players/active-player-18.jpg",
+    "2026mental2/assets/players/field-candidates/candidates.json": "resources/2026mental2/assets/players/field-candidates/candidates.json",
+    "2026mental2/assets/players/field-candidates-2/candidates.json": "resources/2026mental2/assets/players/field-candidates-2/candidates.json",
+    "2026mental2/assets/players/field-candidates-4/candidates.json": "resources/2026mental2/assets/players/field-candidates-4/candidates.json",
+    "2026mental2/assets/players/field-candidates-3/candidates.json": "resources/2026mental2/assets/players/field-candidates-3/candidates.json",
+    "mps_basecamp/guides.js": "guides.js",
+    "mps_basecamp/assets/guides/mobile-summary.png": "assets/guides/mobile-summary.png",
+    "mps_basecamp/assets/guides/mobile-growth.png": "assets/guides/mobile-growth.png",
+    "mps_basecamp/assets/guides/mobile-physical.png": "assets/guides/mobile-physical.png",
+    "mps_basecamp/assets/guides/mobile-mental.png": "assets/guides/mobile-mental.png",
+    "mps_basecamp/assets/guides/standard-01.png": "assets/guides/standard-01.png",
+    "mps_basecamp/assets/guides/standard-02.png": "assets/guides/standard-02.png",
+    "mps_basecamp/assets/guides/standard-03.png": "assets/guides/standard-03.png",
+    "mps_basecamp/assets/guides/standard-04.png": "assets/guides/standard-04.png",
+    "mps_basecamp/assets/guides/standard-05.png": "assets/guides/standard-05.png",
+    "mps_basecamp/assets/guides/standard-06.png": "assets/guides/standard-06.png",
+    "mps_basecamp/assets/guides/standard-07.png": "assets/guides/standard-07.png",
+    "mps_basecamp/assets/guides/standard-08.png": "assets/guides/standard-08.png",
+    "mps_basecamp/assets/guides/standard-09.png": "assets/guides/standard-09.png",
+    "mps_basecamp/assets/guides/standard-10.png": "assets/guides/standard-10.png",
+    "mps_basecamp/assets/guides/standard-11.png": "assets/guides/standard-11.png",
+    "mps_basecamp/assets/guides/standard-12.png": "assets/guides/standard-12.png",
+    "2026mpssports_football/assets/reports/mental-01.jpg": "resources/2026mpssports_football/assets/reports/mental-01.jpg",
+    "2026mpssports_football/assets/reports/mental-02.jpg": "resources/2026mpssports_football/assets/reports/mental-02.jpg",
+    "2026mpssports_football/assets/reports/mental-03.jpg": "resources/2026mpssports_football/assets/reports/mental-03.jpg",
+    "2026mpssports_football/assets/reports/mental-04.jpg": "resources/2026mpssports_football/assets/reports/mental-04.jpg",
+    "2026physical/index.html": "resources/2026physical/index.html",
+    "2026mpssports_football/assets/reports/physical-01.jpg": "resources/2026mpssports_football/assets/reports/physical-01.jpg",
+    "2026mpssports_football/assets/reports/physical-02.jpg": "resources/2026mpssports_football/assets/reports/physical-02.jpg",
+    "2026mpssports_football/assets/reports/physical-03.jpg": "resources/2026mpssports_football/assets/reports/physical-03.jpg",
+    "2026mpssports_football/assets/reports/physical-04.jpg": "resources/2026mpssports_football/assets/reports/physical-04.jpg",
+    "2026growth/index.html": "resources/2026growth/index.html",
+    "2026mpssports_football/assets/reports/growth-01.jpg": "resources/2026mpssports_football/assets/reports/growth-01.jpg",
+    "2026mpssports_football/assets/reports/growth-02.jpg": "resources/2026mpssports_football/assets/reports/growth-02.jpg",
+    "2026mpssports_football/assets/reports/growth-03.jpg": "resources/2026mpssports_football/assets/reports/growth-03.jpg",
+    "2026mpssports_football/assets/reports/growth-04.jpg": "resources/2026mpssports_football/assets/reports/growth-04.jpg",
+    "2026mpssports_football/assets/reports/growth-05.jpg": "resources/2026mpssports_football/assets/reports/growth-05.jpg",
+    "mps_basecamp/assets/guides/team-summary.png": "assets/guides/team-summary.png",
+    "mps_basecamp/assets/guides/team-physical.png": "assets/guides/team-physical.png",
+    "mps_basecamp/assets/guides/team-growth.png": "assets/guides/team-growth.png",
+    "mps_basecamp/assets/guides/team-mental.png": "assets/guides/team-mental.png",
+    "mps_basecamp/assets/guides/team-player.png": "assets/guides/team-player.png",
+    "haeonsports/indexmental.html": "resources/haeonsports/indexmental.html",
+    "haeonsports/assets/mental/PretendardVariable.woff2": "resources/haeonsports/assets/mental/PretendardVariable.woff2",
+    "haeonsports/assets/mental/mps-logo.svg": "resources/haeonsports/assets/mental/mps-logo.svg",
+    "haeonsports/assets/mental/soccer-boy-poses.png": "resources/haeonsports/assets/mental/soccer-boy-poses.png",
+    "haeonsports/assets/mental/assessment.jpg": "resources/haeonsports/assets/mental/assessment.jpg",
+    "haeonsports/assets/mental/questionnaire-close.jpg": "resources/haeonsports/assets/mental/questionnaire-close.jpg",
+    "haeonsports/assets/mental/questionnaire-team.jpg": "resources/haeonsports/assets/mental/questionnaire-team.jpg",
+    "haeonsports/assets/mental/field-care.jpg": "resources/haeonsports/assets/mental/field-care.jpg",
+    "haeonsports/assets/mental/clinic-room.jpg": "resources/haeonsports/assets/mental/clinic-room.jpg",
+    "haeonsports/index.html": "resources/haeonsports/index.html",
+    "haeonsports/logo.png": "resources/haeonsports/logo.png",
+    "haeonsports/images/teamdoctor.jpg": "resources/haeonsports/images/teamdoctor.jpg",
+    "haeonsports/images/teamdoctor1.jpg": "resources/haeonsports/images/teamdoctor1.jpg",
+    "haeonsports/images/teamdoctor2.jpg": "resources/haeonsports/images/teamdoctor2.jpg",
+    "haeonsports/images/teamlogo1FC.jpg": "resources/haeonsports/images/teamlogo1FC.jpg",
+    "haeonsports/images/team1.jpg": "resources/haeonsports/images/team1.jpg",
+    "haeonsports/images/team2.jpg": "resources/haeonsports/images/team2.jpg",
+    "haeonsports/images/team3.jpg": "resources/haeonsports/images/team3.jpg",
+    "haeonsports/images/team4.jpg": "resources/haeonsports/images/team4.jpg",
+    "haeonsports/images/team5.jpg": "resources/haeonsports/images/team5.jpg",
+    "haeonsports/images/team6.jpg": "resources/haeonsports/images/team6.jpg",
+    "haeonsports/images/map.jpg": "resources/haeonsports/images/map.jpg",
+    "haeonsports/assets/mental/clinic-lounge.jpg": "resources/haeonsports/assets/mental/clinic-lounge.jpg",
+    "mps_basecamp/app.js": "app.js",
+    "Mtest/index.html": "resources/Mtest/index.html",
+    "mps_basecamp/mental-evidence.html": "mental-evidence.html",
+    "mps_basecamp/guide.html": "guide.html",
+    "mentalguide/index.html": "resources/mentalguide/index.html",
+    "20260916 diary/index.html": "resources/20260916 diary/index.html",
+    "20260916 diary/manifest.webmanifest": "resources/20260916 diary/manifest.webmanifest",
+    "20260916 diary/assets/brand/icon-192.png": "resources/20260916 diary/assets/brand/icon-192.png",
+    "20260916 diary/assets/brand/icon-512.png": "resources/20260916 diary/assets/brand/icon-512.png",
+    "20260916 diary/icon.svg": "resources/20260916 diary/icon.svg",
+    "20260916 diary/assets/brand/symbol-white.svg": "resources/20260916 diary/assets/brand/symbol-white.svg",
+    "20260916 diary/assets/brand/logo-black.svg": "resources/20260916 diary/assets/brand/logo-black.svg",
+    "20260916 diary/assets/brand/symbol-black.svg": "resources/20260916 diary/assets/brand/symbol-black.svg",
+    "20260916 diary/assets/brand/logo-white.svg": "resources/20260916 diary/assets/brand/logo-white.svg",
+    "20260916 diary/assets/fonts/PretendardVariable.woff2": "resources/20260916 diary/assets/fonts/PretendardVariable.woff2",
+    "20260916 diary/style.css": "resources/20260916 diary/style.css",
+    "20260916 diary/age-copy.js": "resources/20260916 diary/age-copy.js",
+    "20260916 diary/app.js": "resources/20260916 diary/app.js",
+    "20260916 diary/sw.js": "resources/20260916 diary/sw.js",
+    "20260916 diary/refresh.css": "resources/20260916 diary/refresh.css",
+    "mps_basecamp/mental-diary.html": "mental-diary.html",
+    "haeon/survey/pain/index.html": "resources/haeon/survey/pain/index.html",
+    "@HAEONEMR/index.html": "resources/@HAEONEMR/index.html",
+    "@HAEONEMR/guides/guide.css": "resources/@HAEONEMR/guides/guide.css",
+    "@HAEONEMR/guides/treatment.html": "resources/@HAEONEMR/guides/treatment.html",
+    "@HAEONEMR/guides/index.html": "resources/@HAEONEMR/guides/index.html",
+    "@HAEONEMR/guides/process.html": "resources/@HAEONEMR/guides/process.html",
+    "@HAEONEMR/guides/prescription.html": "resources/@HAEONEMR/guides/prescription.html",
+    "@HAEONEMR/guides/diagnostic.html": "resources/@HAEONEMR/guides/diagnostic.html",
+    "@HAEONEMR/guides/diagnostic_test_guide.html": "resources/@HAEONEMR/guides/diagnostic_test_guide.html",
+    "@HAEONEMR/guides/guide.js": "resources/@HAEONEMR/guides/guide.js",
+    "@HAEONEMR/guides/prescription.json": "resources/@HAEONEMR/guides/prescription.json",
+    "@HAEONEMR/guides/diagnostic.json": "resources/@HAEONEMR/guides/diagnostic.json",
+    "@HAEONEMR/guides/treatment.json": "resources/@HAEONEMR/guides/treatment.json",
+    "@HAEONEMR/guides/source/process.html": "resources/@HAEONEMR/guides/source/process.html",
+    "@growthai/index.html": "resources/@growthai/index.html",
+    "@growthai/frontend/assets/mps-symbol.png": "resources/@growthai/frontend/assets/mps-symbol.png",
+    "@growthai/frontend/css/landing.css": "resources/@growthai/frontend/css/landing.css",
+    "@growthai/frontend/js/login.js": "resources/@growthai/frontend/js/login.js",
+    "mpsmanual/index.html": "resources/mpsmanual/index.html",
+    "rnd/index.html": "resources/rnd/index.html",
+    "mps-founding-operations/Application.html": "resources/mps-founding-operations/Application.html",
+    "mps-founding-operations/forms.css": "resources/mps-founding-operations/forms.css",
+    "mps-founding-brochure/assets/PretendardVariable.woff2": "resources/mps-founding-brochure/assets/PretendardVariable.woff2",
+    "mps-founding-operations/index.html": "resources/mps-founding-operations/index.html",
+    "mps-founding-operations/output/pdf/MPS_Founding_Application.pdf": "resources/mps-founding-operations/output/pdf/MPS_Founding_Application.pdf",
+    "mps-founding-operations/Evaluation.html": "resources/mps-founding-operations/Evaluation.html",
+    "mps-founding-operations/forms.js": "resources/mps-founding-operations/forms.js",
+    "mps-founding-operations/output/pdf/MPS_Founding_Evaluation.pdf": "resources/mps-founding-operations/output/pdf/MPS_Founding_Evaluation.pdf",
+    "mps-founding-operations/Audit.html": "resources/mps-founding-operations/Audit.html",
+    "mps-founding-operations/output/pdf/MPS_Founding_Audit.pdf": "resources/mps-founding-operations/output/pdf/MPS_Founding_Audit.pdf",
+    "mps-founding-operations/Term_Sheet.html": "resources/mps-founding-operations/Term_Sheet.html",
+    "mps-founding-operations/output/pdf/MPS_Founding_Term_Sheet.pdf": "resources/mps-founding-operations/output/pdf/MPS_Founding_Term_Sheet.pdf",
+    "mps-founding-operations/FAQ.html": "resources/mps-founding-operations/FAQ.html",
+    "mps-founding-operations/output/pdf/MPS_Founding_FAQ.pdf": "resources/mps-founding-operations/output/pdf/MPS_Founding_FAQ.pdf",
+    "mps-founding-brochure/index.html": "resources/mps-founding-brochure/index.html",
+    "mps-founding-brochure/design.css": "resources/mps-founding-brochure/design.css",
+    "mps-founding-brochure/assets/logo-black.png": "resources/mps-founding-brochure/assets/logo-black.png",
+    "mps-founding-brochure/assets/sources.json": "resources/mps-founding-brochure/assets/sources.json",
+    "mps-founding-brochure/assets/soccer-boy.png": "resources/mps-founding-brochure/assets/soccer-boy.png",
+    "mps-founding-brochure/assets/deltas.webp": "resources/mps-founding-brochure/assets/deltas.webp",
+    "mps-founding-brochure/assets/report-growth.png": "resources/mps-founding-brochure/assets/report-growth.png",
+    "mps-founding-brochure/assets/bwa.jpg": "resources/mps-founding-brochure/assets/bwa.jpg",
+    "mps-founding-brochure/assets/center.jpg": "resources/mps-founding-brochure/assets/center.jpg",
+    "mps-founding-brochure/assets/push.png": "resources/mps-founding-brochure/assets/push.png",
+    "mps-founding-brochure/assets/soccer-boy-poses-v2.png": "resources/mps-founding-brochure/assets/soccer-boy-poses-v2.png",
+    "mps-founding-brochure/assets/report-physical.png": "resources/mps-founding-brochure/assets/report-physical.png",
+    "mps-founding-brochure/assets/symbol-black.png": "resources/mps-founding-brochure/assets/symbol-black.png",
+    "mps-founding-brochure/assets/consult.jpg": "resources/mps-founding-brochure/assets/consult.jpg",
+    "mps-founding-brochure/assets/ubio.webp": "resources/mps-founding-brochure/assets/ubio.webp",
+    "mps-founding-brochure/assets/founding-field.jpeg": "resources/mps-founding-brochure/assets/founding-field.jpeg",
+    "mps-founding-brochure/assets/founding-workshop.jpg": "resources/mps-founding-brochure/assets/founding-workshop.jpg",
+    "mps-founding-brochure/assets/founding-assessment.jpg": "resources/mps-founding-brochure/assets/founding-assessment.jpg",
+    "mps-founding-brochure/assets/founding-team.jpeg": "resources/mps-founding-brochure/assets/founding-team.jpeg",
+    "mps-founding-brochure/business-final.css": "resources/mps-founding-brochure/business-final.css",
+    "mps-founding-brochure/brochure-visuals.css": "resources/mps-founding-brochure/brochure-visuals.css",
+    "mps-founding-brochure/presentation.html": "resources/mps-founding-brochure/presentation.html",
+    "mps-founding-brochure/consultation.html": "resources/mps-founding-brochure/consultation.html",
+    "mps-founding-brochure/viewer.js": "resources/mps-founding-brochure/viewer.js",
+    "mps-report-showcase/presentation.html": "resources/mps-report-showcase/presentation.html",
+    "mps-report-showcase/design.css": "resources/mps-report-showcase/design.css",
+    "mps-report-showcase/assets/PretendardVariable.woff2": "resources/mps-report-showcase/assets/PretendardVariable.woff2",
+    "mps-report-showcase/assets/logo-black.png": "resources/mps-report-showcase/assets/logo-black.png",
+    "mps-report-showcase/assets/reports/general-10.jpg": "resources/mps-report-showcase/assets/reports/general-10.jpg",
+    "mps-report-showcase/assets/reports/general-04.jpg": "resources/mps-report-showcase/assets/reports/general-04.jpg",
+    "mps-report-showcase/assets/reports/general-05.jpg": "resources/mps-report-showcase/assets/reports/general-05.jpg",
+    "mps-report-showcase/assets/reports/general-11.jpg": "resources/mps-report-showcase/assets/reports/general-11.jpg",
+    "mps-report-showcase/assets/reports/general-07.jpg": "resources/mps-report-showcase/assets/reports/general-07.jpg",
+    "mps-report-showcase/assets/reports/general-12.jpg": "resources/mps-report-showcase/assets/reports/general-12.jpg",
+    "mps-report-showcase/assets/reports/general-06.jpg": "resources/mps-report-showcase/assets/reports/general-06.jpg",
+    "mps-report-showcase/assets/reports/general-02.jpg": "resources/mps-report-showcase/assets/reports/general-02.jpg",
+    "mps-report-showcase/assets/reports/general-03.jpg": "resources/mps-report-showcase/assets/reports/general-03.jpg",
+    "mps-report-showcase/assets/reports/general-01.jpg": "resources/mps-report-showcase/assets/reports/general-01.jpg",
+    "mps-report-showcase/assets/reports/mobile-growth.png": "resources/mps-report-showcase/assets/reports/mobile-growth.png",
+    "mps-report-showcase/assets/reports/mobile-physical.png": "resources/mps-report-showcase/assets/reports/mobile-physical.png",
+    "mps-report-showcase/assets/reports/growth-04.jpg": "resources/mps-report-showcase/assets/reports/growth-04.jpg",
+    "mps-report-showcase/assets/reports/general-example.pdf": "resources/mps-report-showcase/assets/reports/general-example.pdf",
+    "mps-report-showcase/assets/reports/growth-05.jpg": "resources/mps-report-showcase/assets/reports/growth-05.jpg",
+    "mps-report-showcase/assets/reports/growth-01.jpg": "resources/mps-report-showcase/assets/reports/growth-01.jpg",
+    "mps-report-showcase/assets/reports/physical-example.pdf": "resources/mps-report-showcase/assets/reports/physical-example.pdf",
+    "mps-report-showcase/assets/reports/growth-example.pdf": "resources/mps-report-showcase/assets/reports/growth-example.pdf",
+    "mps-report-showcase/assets/reports/manifest.json": "resources/mps-report-showcase/assets/reports/manifest.json",
+    "mps-report-showcase/assets/reports/growth-02.jpg": "resources/mps-report-showcase/assets/reports/growth-02.jpg",
+    "mps-report-showcase/assets/reports/growth-03.jpg": "resources/mps-report-showcase/assets/reports/growth-03.jpg",
+    "mps-report-showcase/assets/reports/mental-03.jpg": "resources/mps-report-showcase/assets/reports/mental-03.jpg",
+    "mps-report-showcase/assets/reports/mobile-mental.png": "resources/mps-report-showcase/assets/reports/mobile-mental.png",
+    "mps-report-showcase/assets/reports/mental-02.jpg": "resources/mps-report-showcase/assets/reports/mental-02.jpg",
+    "mps-report-showcase/assets/reports/physical-04.jpg": "resources/mps-report-showcase/assets/reports/physical-04.jpg",
+    "mps-report-showcase/assets/reports/mental-example.pdf": "resources/mps-report-showcase/assets/reports/mental-example.pdf",
+    "mps-report-showcase/assets/reports/mental-01.jpg": "resources/mps-report-showcase/assets/reports/mental-01.jpg",
+    "mps-report-showcase/assets/reports/physical-01.jpg": "resources/mps-report-showcase/assets/reports/physical-01.jpg",
+    "mps-report-showcase/assets/reports/mental-04.jpg": "resources/mps-report-showcase/assets/reports/mental-04.jpg",
+    "mps-report-showcase/assets/reports/general-08.jpg": "resources/mps-report-showcase/assets/reports/general-08.jpg",
+    "mps-report-showcase/assets/reports/physical-02.jpg": "resources/mps-report-showcase/assets/reports/physical-02.jpg",
+    "mps-report-showcase/assets/reports/physical-03.jpg": "resources/mps-report-showcase/assets/reports/physical-03.jpg",
+    "mps-report-showcase/assets/reports/general-09.jpg": "resources/mps-report-showcase/assets/reports/general-09.jpg",
+    "mps-report-showcase/reports.css": "resources/mps-report-showcase/reports.css",
+    "mps-report-showcase/index.html": "resources/mps-report-showcase/index.html",
+    "mps-report-showcase/gallery.html": "resources/mps-report-showcase/gallery.html",
+    "mps-report-showcase/reports.js": "resources/mps-report-showcase/reports.js",
+    "mps-report-showcase/viewer.js": "resources/mps-report-showcase/viewer.js",
+    "20260916 맵/MPS_certified_club_map.html": "resources/20260916 맵/MPS_certified_club_map.html",
+    "20260916 맵/vendor/leaflet.css": "resources/20260916 맵/vendor/leaflet.css",
+    "20260916 맵/vendor/MarkerCluster.css": "resources/20260916 맵/vendor/MarkerCluster.css",
+    "20260916 맵/map.css": "resources/20260916 맵/map.css",
+    "20260916 맵/brand-theme.css": "resources/20260916 맵/brand-theme.css",
+    "20260916 맵/assets/fonts/PretendardVariable.woff2": "resources/20260916 맵/assets/fonts/PretendardVariable.woff2",
+    "20260916 맵/assets/mps-symbol-white.png": "resources/20260916 맵/assets/mps-symbol-white.png",
+    "20260916 맵/assets/mps-logo-white.png": "resources/20260916 맵/assets/mps-logo-white.png",
+    "20260916 맵/assets/mps-symbol-black.png": "resources/20260916 맵/assets/mps-symbol-black.png",
+    "20260916 맵/assets/mps-logo-black.png": "resources/20260916 맵/assets/mps-logo-black.png",
+    "20260916 맵/vendor/leaflet.js": "resources/20260916 맵/vendor/leaflet.js",
+    "20260916 맵/vendor/leaflet.markercluster.js": "resources/20260916 맵/vendor/leaflet.markercluster.js",
+    "20260916 맵/clubs-data.js": "resources/20260916 맵/clubs-data.js",
+    "20260916 맵/map.js": "resources/20260916 맵/map.js",
+    "2026mpssports_football/skill_pretendard.html": "resources/2026mpssports_football/skill_pretendard.html",
+    "2026mpssports_football/deck.css": "resources/2026mpssports_football/deck.css",
+    "2026mpssports_football/assets/player-poses.png": "resources/2026mpssports_football/assets/player-poses.png",
+    "2026mpssports_football/assets/mps-center-logo.png": "resources/2026mpssports_football/assets/mps-center-logo.png",
+    "2026mpssports_football/assets/kim.png": "resources/2026mpssports_football/assets/kim.png",
+    "2026mpssports_football/assets/hwang.png": "resources/2026mpssports_football/assets/hwang.png",
+    "2026mpssports_football/assets/yang.png": "resources/2026mpssports_football/assets/yang.png",
+    "2026mpssports_football/assets/lee.png": "resources/2026mpssports_football/assets/lee.png",
+    "2026mpssports_football/assets/reports/general-10.jpg": "resources/2026mpssports_football/assets/reports/general-10.jpg",
+    "2026mpssports_football/assets/reports/general-04.jpg": "resources/2026mpssports_football/assets/reports/general-04.jpg",
+    "2026mpssports_football/assets/reports/general-05.jpg": "resources/2026mpssports_football/assets/reports/general-05.jpg",
+    "2026mpssports_football/assets/reports/general-11.jpg": "resources/2026mpssports_football/assets/reports/general-11.jpg",
+    "2026mpssports_football/assets/reports/general-07.jpg": "resources/2026mpssports_football/assets/reports/general-07.jpg",
+    "2026mpssports_football/assets/reports/general-12.jpg": "resources/2026mpssports_football/assets/reports/general-12.jpg",
+    "2026mpssports_football/assets/reports/general-06.jpg": "resources/2026mpssports_football/assets/reports/general-06.jpg",
+    "2026mpssports_football/assets/reports/general-02.jpg": "resources/2026mpssports_football/assets/reports/general-02.jpg",
+    "2026mpssports_football/assets/reports/general-03.jpg": "resources/2026mpssports_football/assets/reports/general-03.jpg",
+    "2026mpssports_football/assets/reports/general-01.jpg": "resources/2026mpssports_football/assets/reports/general-01.jpg",
+    "2026mpssports_football/assets/reports/mobile-growth.png": "resources/2026mpssports_football/assets/reports/mobile-growth.png",
+    "2026mpssports_football/assets/reports/mobile-physical.png": "resources/2026mpssports_football/assets/reports/mobile-physical.png",
+    "2026mpssports_football/assets/reports/general-example.pdf": "resources/2026mpssports_football/assets/reports/general-example.pdf",
+    "2026mpssports_football/assets/reports/physical-example.pdf": "resources/2026mpssports_football/assets/reports/physical-example.pdf",
+    "2026mpssports_football/assets/reports/growth-example.pdf": "resources/2026mpssports_football/assets/reports/growth-example.pdf",
+    "2026mpssports_football/assets/reports/manifest.json": "resources/2026mpssports_football/assets/reports/manifest.json",
+    "2026mpssports_football/assets/reports/mobile-mental.png": "resources/2026mpssports_football/assets/reports/mobile-mental.png",
+    "2026mpssports_football/assets/reports/mental-example.pdf": "resources/2026mpssports_football/assets/reports/mental-example.pdf",
+    "2026mpssports_football/assets/reports/general-08.jpg": "resources/2026mpssports_football/assets/reports/general-08.jpg",
+    "2026mpssports_football/assets/reports/general-09.jpg": "resources/2026mpssports_football/assets/reports/general-09.jpg",
+    "2026mpssports_football/visual.css": "resources/2026mpssports_football/visual.css",
+    "2026mpssports_football/reports.css": "resources/2026mpssports_football/reports.css",
+    "2026mpssports_football/reports.html": "resources/2026mpssports_football/reports.html",
+    "2026mpssports_football/index.html": "resources/2026mpssports_football/index.html",
+    "2026mpssports_football/business_pretendard.html": "resources/2026mpssports_football/business_pretendard.html",
+    "2026mpssports_football/business.html": "resources/2026mpssports_football/business.html",
+    "2026mpssports_football/skill.html": "resources/2026mpssports_football/skill.html",
+    "2026mpssports_football/physical_pretendard.html": "resources/2026mpssports_football/physical_pretendard.html",
+    "2026mpssports_football/physical.html": "resources/2026mpssports_football/physical.html",
+    "2026mpssports_football/medical_pretendard.html": "resources/2026mpssports_football/medical_pretendard.html",
+    "2026mpssports_football/medical.html": "resources/2026mpssports_football/medical.html",
+    "2026mpssports_football/reports.js": "resources/2026mpssports_football/reports.js",
+    "mps_basecamp/reports/standard/index.html": "reports/standard/index.html",
+    "mps_basecamp/reports/standard/viewer.css": "reports/standard/viewer.css",
+    "mps_basecamp/reports/standard/MPS-standard-images.zip": "reports/standard/MPS-standard-images.zip",
+    "mps_basecamp/reports/standard/mps-standard-01.png": "reports/standard/mps-standard-01.png",
+    "mps_basecamp/reports/standard/mps-standard-02.png": "reports/standard/mps-standard-02.png",
+    "mps_basecamp/reports/standard/mps-standard-03.png": "reports/standard/mps-standard-03.png",
+    "mps_basecamp/reports/standard/mps-standard-04.png": "reports/standard/mps-standard-04.png",
+    "mps_basecamp/reports/standard/mps-standard-05.png": "reports/standard/mps-standard-05.png",
+    "mps_basecamp/reports/standard/mps-standard-06.png": "reports/standard/mps-standard-06.png",
+    "mps_basecamp/reports/standard/mps-standard-07.png": "reports/standard/mps-standard-07.png",
+    "mps_basecamp/reports/standard/mps-standard-08.png": "reports/standard/mps-standard-08.png",
+    "mps_basecamp/reports/standard/mps-standard-09.png": "reports/standard/mps-standard-09.png",
+    "mps_basecamp/reports/standard/mps-standard-10.png": "reports/standard/mps-standard-10.png",
+    "mps_basecamp/reports/standard/mps-standard-11.png": "reports/standard/mps-standard-11.png",
+    "mps_basecamp/reports/standard/mps-standard-12.png": "reports/standard/mps-standard-12.png",
+    "mps_basecamp/reports/standard/viewer.js": "reports/standard/viewer.js",
+    "mps-football-centers/dashboard.html": "resources/mps-football-centers/dashboard.html",
+    "mps-football-centers/dashboard.css": "resources/mps-football-centers/dashboard.css",
+    "mps-football-centers/index.html": "resources/mps-football-centers/index.html",
+    "mps-football-centers/forms.css": "resources/mps-football-centers/forms.css",
+    "mps-football-centers/Application.html": "resources/mps-football-centers/Application.html",
+    "mps-football-centers/forms.js": "resources/mps-football-centers/forms.js",
+    "mps-football-centers/output/pdf/MPS_Football_Application.pdf": "resources/mps-football-centers/output/pdf/MPS_Football_Application.pdf",
+    "mps-football-centers/Evaluation.html": "resources/mps-football-centers/Evaluation.html",
+    "mps-football-centers/output/pdf/MPS_Football_Evaluation.pdf": "resources/mps-football-centers/output/pdf/MPS_Football_Evaluation.pdf",
+    "mps-football-centers/Audit.html": "resources/mps-football-centers/Audit.html",
+    "mps-football-centers/output/pdf/MPS_Football_Audit.pdf": "resources/mps-football-centers/output/pdf/MPS_Football_Audit.pdf",
+    "mps-football-centers/Term_Sheet.html": "resources/mps-football-centers/Term_Sheet.html",
+    "mps-football-centers/output/pdf/MPS_Football_Term_Sheet.pdf": "resources/mps-football-centers/output/pdf/MPS_Football_Term_Sheet.pdf",
+    "mps-football-centers/FAQ.html": "resources/mps-football-centers/FAQ.html",
+    "mps-football-centers/output/pdf/MPS_Football_FAQ.pdf": "resources/mps-football-centers/output/pdf/MPS_Football_FAQ.pdf",
+    "mps-football-centers/dashboard.js": "resources/mps-football-centers/dashboard.js",
+    "mps_basecamp/bio-basics.html": "bio-basics.html",
+    "mps_basecamp/bio-growth.html": "bio-growth.html",
+    "mps_basecamp/bio-practice.html": "bio-practice.html",
+    "mps_basecamp/bio-questions.html": "bio-questions.html",
+    "mps_basecamp/bio-report.html": "bio-report.html",
+    "mps_basecamp/bio-operations.html": "bio-operations.html",
+    "mps_basecamp/organization.html": "organization.html",
+    "mps_basecamp/player.html": "player.html"
+  },
+  "unresolved_candidates": [],
+  "notes": [
+    "2026mental/index.html is replaced by the explicitly labelled sample report in resources/2026mental2/index.html.",
+    "Missing legacy club logos use a neutral TEAM badge.",
+    "Server-backed Growth AI login/evaluation and EMR remote data require their original services."
+  ],
+  "inventory": [
+    {
+      "path": "resources/20260916 diary/age-copy.js",
+      "bytes": 10289
+    },
+    {
+      "path": "resources/20260916 diary/app.js",
+      "bytes": 34540
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/icon-192.png",
+      "bytes": 5705
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/icon-512.png",
+      "bytes": 20216
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/logo-black.svg",
+      "bytes": 2125
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/logo-white.svg",
+      "bytes": 2268
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/symbol-black.svg",
+      "bytes": 703
+    },
+    {
+      "path": "resources/20260916 diary/assets/brand/symbol-white.svg",
+      "bytes": 804
+    },
+    {
+      "path": "resources/20260916 diary/assets/fonts/PretendardVariable.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/20260916 diary/icon.svg",
+      "bytes": 920
+    },
+    {
+      "path": "resources/20260916 diary/index.html",
+      "bytes": 2096
+    },
+    {
+      "path": "resources/20260916 diary/manifest.webmanifest",
+      "bytes": 614
+    },
+    {
+      "path": "resources/20260916 diary/refresh.css",
+      "bytes": 9762
+    },
+    {
+      "path": "resources/20260916 diary/style.css",
+      "bytes": 23018
+    },
+    {
+      "path": "resources/20260916 diary/sw.js",
+      "bytes": 1308
+    },
+    {
+      "path": "resources/20260916 맵/MPS_certified_club_map.html",
+      "bytes": 4708
+    },
+    {
+      "path": "resources/20260916 맵/assets/fonts/PretendardVariable.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/20260916 맵/assets/mps-logo-black.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/20260916 맵/assets/mps-logo-white.png",
+      "bytes": 19513
+    },
+    {
+      "path": "resources/20260916 맵/assets/mps-symbol-black.png",
+      "bytes": 7799
+    },
+    {
+      "path": "resources/20260916 맵/assets/mps-symbol-white.png",
+      "bytes": 7344
+    },
+    {
+      "path": "resources/20260916 맵/brand-theme.css",
+      "bytes": 14888
+    },
+    {
+      "path": "resources/20260916 맵/clubs-data.js",
+      "bytes": 179758
+    },
+    {
+      "path": "resources/20260916 맵/map.css",
+      "bytes": 15268
+    },
+    {
+      "path": "resources/20260916 맵/map.js",
+      "bytes": 15245
+    },
+    {
+      "path": "resources/20260916 맵/vendor/MarkerCluster.css",
+      "bytes": 872
+    },
+    {
+      "path": "resources/20260916 맵/vendor/images/layers-2x.png",
+      "bytes": 1259
+    },
+    {
+      "path": "resources/20260916 맵/vendor/images/layers.png",
+      "bytes": 696
+    },
+    {
+      "path": "resources/20260916 맵/vendor/images/marker-icon-2x.png",
+      "bytes": 2464
+    },
+    {
+      "path": "resources/20260916 맵/vendor/images/marker-icon.png",
+      "bytes": 1466
+    },
+    {
+      "path": "resources/20260916 맵/vendor/images/marker-shadow.png",
+      "bytes": 618
+    },
+    {
+      "path": "resources/20260916 맵/vendor/leaflet.css",
+      "bytes": 14145
+    },
+    {
+      "path": "resources/20260916 맵/vendor/leaflet.js",
+      "bytes": 147552
+    },
+    {
+      "path": "resources/20260916 맵/vendor/leaflet.markercluster.js",
+      "bytes": 34136
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/0ba9062caa384e8995b70164.jpg",
+      "bytes": 3737879
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/1db3cb845ba4839e39e92f9b.otf",
+      "bytes": 427168
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/2f09be198653707b91fdb01f.otf",
+      "bytes": 417800
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/343c96839799de4fbc20bf30.jpeg",
+      "bytes": 345203
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/57ff1d5909b537f462ba5c56.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/5d02a8ab19fec007bc0a05cd.otf",
+      "bytes": 416236
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/9599f12fd42fc0bce1cd50b4.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/20260922mpssports/site_assets/c7154e57e0b7fde1c4f4657a.otf",
+      "bytes": 416520
+    },
+    {
+      "path": "resources/2026growth/index.html",
+      "bytes": 3128074
+    },
+    {
+      "path": "resources/2026growth/성장리포트_5페이지_미리보기.pdf",
+      "bytes": 1814684
+    },
+    {
+      "path": "resources/2026mental2/MPS_김해온(샘플)_2회_멘탈리포트.pdf",
+      "bytes": 6479059
+    },
+    {
+      "path": "resources/2026mental2/MPS_멘탈_통합_유형별_분석.html",
+      "bytes": 8781
+    },
+    {
+      "path": "resources/2026mental2/MPS_멘탈포지션_8유형_v2.xlsx",
+      "bytes": 163644
+    },
+    {
+      "path": "resources/2026mental2/MPS_멘탈포지션_A4_3페이지_리포트_v3.html",
+      "bytes": 8260257
+    },
+    {
+      "path": "resources/2026mental2/assets/growth-mental-watercolor-v4.png",
+      "bytes": 1765820
+    },
+    {
+      "path": "resources/2026mental2/assets/growth-support-watercolor-v4.png",
+      "bytes": 2518452
+    },
+    {
+      "path": "resources/2026mental2/assets/mps-logo-black.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/2026mental2/assets/mps-team-doctor-mental-coach.png",
+      "bytes": 1680670
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-01.jpg",
+      "bytes": 44352
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-05.jpg",
+      "bytes": 51423
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-06.jpg",
+      "bytes": 70708
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-08.jpg",
+      "bytes": 107799
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-09.jpg",
+      "bytes": 44163
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-10.jpg",
+      "bytes": 19768
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-11.jpg",
+      "bytes": 21639
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-12.jpg",
+      "bytes": 60112
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-13.jpg",
+      "bytes": 29395
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-15.jpg",
+      "bytes": 168662
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-18.jpg",
+      "bytes": 102679
+    },
+    {
+      "path": "resources/2026mental2/assets/players/active-player-19.jpg",
+      "bytes": 38338
+    },
+    {
+      "path": "resources/2026mental2/assets/players/field-candidates/candidates.json",
+      "bytes": 305393
+    },
+    {
+      "path": "resources/2026mental2/assets/players/field-candidates-2/candidates.json",
+      "bytes": 55861
+    },
+    {
+      "path": "resources/2026mental2/assets/players/field-candidates-3/candidates.json",
+      "bytes": 47780
+    },
+    {
+      "path": "resources/2026mental2/assets/players/field-candidates-4/candidates.json",
+      "bytes": 20504
+    },
+    {
+      "path": "resources/2026mental2/assets/players/imageinfo.json",
+      "bytes": 91649
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-01.jpg",
+      "bytes": 255649
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-02.jpg",
+      "bytes": 184999
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-03.jpg",
+      "bytes": 361029
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-04.jpg",
+      "bytes": 331125
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-05.jpg",
+      "bytes": 134082
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-06.jpg",
+      "bytes": 263745
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-07.jpg",
+      "bytes": 226378
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-08.jpg",
+      "bytes": 479524
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-09.jpg",
+      "bytes": 114347
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-10.jpg",
+      "bytes": 328887
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-11.jpg",
+      "bytes": 493282
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-12.jpg",
+      "bytes": 97504
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-13.png",
+      "bytes": 96942
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-14.jpg",
+      "bytes": 256959
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-15.jpg",
+      "bytes": 252239
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-16.jpg",
+      "bytes": 82235
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-17.jpg",
+      "bytes": 445278
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-18.jpg",
+      "bytes": 60557
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-19.jpg",
+      "bytes": 224836
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-20.jpg",
+      "bytes": 139785
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-21.jpg",
+      "bytes": 515909
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-22.jpg",
+      "bytes": 123365
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-23.jpg",
+      "bytes": 94725
+    },
+    {
+      "path": "resources/2026mental2/assets/players/player-24.jpg",
+      "bytes": 79045
+    },
+    {
+      "path": "resources/2026mental2/assets/players/sources-before-field.json",
+      "bytes": 18777
+    },
+    {
+      "path": "resources/2026mental2/assets/players/sources.json",
+      "bytes": 21346
+    },
+    {
+      "path": "resources/2026mental2/index.html",
+      "bytes": 99640
+    },
+    {
+      "path": "resources/2026mental2/멘탈_분석대상_검수.csv",
+      "bytes": 115608
+    },
+    {
+      "path": "resources/2026mental2/멘탈_유형별_평균.csv",
+      "bytes": 929
+    },
+    {
+      "path": "resources/2026mental2/참고자료/성장통합_설계와_출처.md",
+      "bytes": 13238
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/hwang.png",
+      "bytes": 1617342
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/kim.png",
+      "bytes": 1558134
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/lee.png",
+      "bytes": 1297887
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/mps-center-logo.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/player-poses.png",
+      "bytes": 1592674
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-01.jpg",
+      "bytes": 136916
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-02.jpg",
+      "bytes": 191030
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-03.jpg",
+      "bytes": 179575
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-04.jpg",
+      "bytes": 257939
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-05.jpg",
+      "bytes": 196401
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-06.jpg",
+      "bytes": 192919
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-07.jpg",
+      "bytes": 241109
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-08.jpg",
+      "bytes": 239635
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-09.jpg",
+      "bytes": 206258
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-10.jpg",
+      "bytes": 175804
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-11.jpg",
+      "bytes": 174760
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-12.jpg",
+      "bytes": 223817
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/general-example.pdf",
+      "bytes": 1560873
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-01.jpg",
+      "bytes": 203148
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-02.jpg",
+      "bytes": 247984
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-03.jpg",
+      "bytes": 264473
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-04.jpg",
+      "bytes": 267763
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-05.jpg",
+      "bytes": 169644
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/growth-example.pdf",
+      "bytes": 1814684
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/manifest.json",
+      "bytes": 4772
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mental-01.jpg",
+      "bytes": 241071
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mental-02.jpg",
+      "bytes": 236247
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mental-03.jpg",
+      "bytes": 201488
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mental-04.jpg",
+      "bytes": 241574
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mental-example.pdf",
+      "bytes": 6479059
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mobile-growth.png",
+      "bytes": 594700
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mobile-mental.png",
+      "bytes": 468989
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/mobile-physical.png",
+      "bytes": 407086
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/physical-01.jpg",
+      "bytes": 225719
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/physical-02.jpg",
+      "bytes": 255526
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/physical-03.jpg",
+      "bytes": 222360
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/physical-04.jpg",
+      "bytes": 227757
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/reports/physical-example.pdf",
+      "bytes": 7330997
+    },
+    {
+      "path": "resources/2026mpssports_football/assets/yang.png",
+      "bytes": 1439451
+    },
+    {
+      "path": "resources/2026mpssports_football/business.html",
+      "bytes": 32870
+    },
+    {
+      "path": "resources/2026mpssports_football/business_pretendard.html",
+      "bytes": 32878
+    },
+    {
+      "path": "resources/2026mpssports_football/deck.css",
+      "bytes": 11058
+    },
+    {
+      "path": "resources/2026mpssports_football/index.html",
+      "bytes": 2691
+    },
+    {
+      "path": "resources/2026mpssports_football/medical.html",
+      "bytes": 32908
+    },
+    {
+      "path": "resources/2026mpssports_football/medical_pretendard.html",
+      "bytes": 32916
+    },
+    {
+      "path": "resources/2026mpssports_football/physical.html",
+      "bytes": 32279
+    },
+    {
+      "path": "resources/2026mpssports_football/physical_pretendard.html",
+      "bytes": 31762
+    },
+    {
+      "path": "resources/2026mpssports_football/reports.css",
+      "bytes": 5933
+    },
+    {
+      "path": "resources/2026mpssports_football/reports.html",
+      "bytes": 14225
+    },
+    {
+      "path": "resources/2026mpssports_football/reports.js",
+      "bytes": 1706
+    },
+    {
+      "path": "resources/2026mpssports_football/skill.html",
+      "bytes": 32360
+    },
+    {
+      "path": "resources/2026mpssports_football/skill_pretendard.html",
+      "bytes": 31843
+    },
+    {
+      "path": "resources/2026mpssports_football/visual.css",
+      "bytes": 17362
+    },
+    {
+      "path": "resources/2026physical/index.html",
+      "bytes": 11596424
+    },
+    {
+      "path": "resources/2026physical/피지컬리포트_4페이지_미리보기.pdf",
+      "bytes": 7330997
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/diagnostic.html",
+      "bytes": 25173
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/diagnostic.json",
+      "bytes": 16981
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/diagnostic_test_guide.html",
+      "bytes": 31030
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/guide.css",
+      "bytes": 4391
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/guide.js",
+      "bytes": 4557
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/index.html",
+      "bytes": 6698
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/prescription.html",
+      "bytes": 64060
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/prescription.json",
+      "bytes": 69444
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/process.html",
+      "bytes": 53973
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/source/process.html",
+      "bytes": 48228
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/treatment.html",
+      "bytes": 32499
+    },
+    {
+      "path": "resources/@HAEONEMR/guides/treatment.json",
+      "bytes": 26796
+    },
+    {
+      "path": "resources/@HAEONEMR/index.html",
+      "bytes": 542991
+    },
+    {
+      "path": "resources/@growthai/frontend/assets/mps-symbol.png",
+      "bytes": 7799
+    },
+    {
+      "path": "resources/@growthai/frontend/css/landing.css",
+      "bytes": 8526
+    },
+    {
+      "path": "resources/@growthai/frontend/js/login.js",
+      "bytes": 2751
+    },
+    {
+      "path": "resources/@growthai/index.html",
+      "bytes": 5679
+    },
+    {
+      "path": "resources/@nextlocal/스포츠뉴트리션프로젝트_넥스트로컬40_진행상황.html",
+      "bytes": 5600332
+    },
+    {
+      "path": "resources/Mtest/index.html",
+      "bytes": 40682
+    },
+    {
+      "path": "resources/haeon/survey/pain/index.html",
+      "bytes": 32573
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/PretendardVariable.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/assessment.jpg",
+      "bytes": 214816
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/clinic-lounge.jpg",
+      "bytes": 238010
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/clinic-room.jpg",
+      "bytes": 232977
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/field-care.jpg",
+      "bytes": 184274
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/mps-logo.svg",
+      "bytes": 2125
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/questionnaire-close.jpg",
+      "bytes": 127673
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/questionnaire-team.jpg",
+      "bytes": 215618
+    },
+    {
+      "path": "resources/haeonsports/assets/mental/soccer-boy-poses.png",
+      "bytes": 1592674
+    },
+    {
+      "path": "resources/haeonsports/images/map.jpg",
+      "bytes": 1148430
+    },
+    {
+      "path": "resources/haeonsports/images/team-placeholder.svg",
+      "bytes": 255
+    },
+    {
+      "path": "resources/haeonsports/images/team1.jpg",
+      "bytes": 291188
+    },
+    {
+      "path": "resources/haeonsports/images/team2.jpg",
+      "bytes": 2004792
+    },
+    {
+      "path": "resources/haeonsports/images/team3.jpg",
+      "bytes": 13479535
+    },
+    {
+      "path": "resources/haeonsports/images/team4.jpg",
+      "bytes": 195797
+    },
+    {
+      "path": "resources/haeonsports/images/team5.jpg",
+      "bytes": 212530
+    },
+    {
+      "path": "resources/haeonsports/images/team6.jpg",
+      "bytes": 9400149
+    },
+    {
+      "path": "resources/haeonsports/images/teamdoctor.jpg",
+      "bytes": 3737879
+    },
+    {
+      "path": "resources/haeonsports/images/teamdoctor1.jpg",
+      "bytes": 6950912
+    },
+    {
+      "path": "resources/haeonsports/images/teamdoctor2.jpg",
+      "bytes": 9763710
+    },
+    {
+      "path": "resources/haeonsports/images/teamlogo1FC.jpg",
+      "bytes": 228055
+    },
+    {
+      "path": "resources/haeonsports/index.html",
+      "bytes": 123976
+    },
+    {
+      "path": "resources/haeonsports/indexmental.html",
+      "bytes": 66197
+    },
+    {
+      "path": "resources/haeonsports/logo.png",
+      "bytes": 96174
+    },
+    {
+      "path": "resources/mentalguide/index.html",
+      "bytes": 119084
+    },
+    {
+      "path": "resources/mps-football-centers/Application.html",
+      "bytes": 10835
+    },
+    {
+      "path": "resources/mps-football-centers/Audit.html",
+      "bytes": 19849
+    },
+    {
+      "path": "resources/mps-football-centers/Evaluation.html",
+      "bytes": 18732
+    },
+    {
+      "path": "resources/mps-football-centers/FAQ.html",
+      "bytes": 6606
+    },
+    {
+      "path": "resources/mps-football-centers/README.md",
+      "bytes": 7002
+    },
+    {
+      "path": "resources/mps-football-centers/Term_Sheet.html",
+      "bytes": 16797
+    },
+    {
+      "path": "resources/mps-football-centers/dashboard-spec.md",
+      "bytes": 6895
+    },
+    {
+      "path": "resources/mps-football-centers/dashboard.css",
+      "bytes": 16262
+    },
+    {
+      "path": "resources/mps-football-centers/dashboard.html",
+      "bytes": 4353
+    },
+    {
+      "path": "resources/mps-football-centers/dashboard.js",
+      "bytes": 17799
+    },
+    {
+      "path": "resources/mps-football-centers/forms.css",
+      "bytes": 4889
+    },
+    {
+      "path": "resources/mps-football-centers/forms.js",
+      "bytes": 2731
+    },
+    {
+      "path": "resources/mps-football-centers/index.html",
+      "bytes": 4904
+    },
+    {
+      "path": "resources/mps-football-centers/output/pdf/MPS_Football_Application.pdf",
+      "bytes": 735519
+    },
+    {
+      "path": "resources/mps-football-centers/output/pdf/MPS_Football_Audit.pdf",
+      "bytes": 1000504
+    },
+    {
+      "path": "resources/mps-football-centers/output/pdf/MPS_Football_Evaluation.pdf",
+      "bytes": 916723
+    },
+    {
+      "path": "resources/mps-football-centers/output/pdf/MPS_Football_FAQ.pdf",
+      "bytes": 580889
+    },
+    {
+      "path": "resources/mps-football-centers/output/pdf/MPS_Football_Term_Sheet.pdf",
+      "bytes": 873436
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/PretendardVariable.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/bwa.jpg",
+      "bytes": 98079
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/center.jpg",
+      "bytes": 244070
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/consult.jpg",
+      "bytes": 240792
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/deltas.webp",
+      "bytes": 41020
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/founding-assessment.jpg",
+      "bytes": 9173457
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/founding-field.jpeg",
+      "bytes": 540563
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/founding-team.jpeg",
+      "bytes": 345203
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/founding-workshop.jpg",
+      "bytes": 3737879
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/logo-black.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/push.png",
+      "bytes": 33846
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/report-growth.png",
+      "bytes": 88903
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/report-physical.png",
+      "bytes": 92534
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/soccer-boy-poses-v2.png",
+      "bytes": 1592674
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/soccer-boy.png",
+      "bytes": 232554
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/sources.json",
+      "bytes": 1318
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/symbol-black.png",
+      "bytes": 7799
+    },
+    {
+      "path": "resources/mps-founding-brochure/assets/ubio.webp",
+      "bytes": 57958
+    },
+    {
+      "path": "resources/mps-founding-brochure/brochure-visuals.css",
+      "bytes": 8986
+    },
+    {
+      "path": "resources/mps-founding-brochure/business-final.css",
+      "bytes": 6915
+    },
+    {
+      "path": "resources/mps-founding-brochure/consultation.html",
+      "bytes": 5037
+    },
+    {
+      "path": "resources/mps-founding-brochure/design.css",
+      "bytes": 23359
+    },
+    {
+      "path": "resources/mps-founding-brochure/index.html",
+      "bytes": 24589
+    },
+    {
+      "path": "resources/mps-founding-brochure/presentation.html",
+      "bytes": 22350
+    },
+    {
+      "path": "resources/mps-founding-brochure/viewer.js",
+      "bytes": 3370
+    },
+    {
+      "path": "resources/mps-founding-operations/Application.html",
+      "bytes": 11348
+    },
+    {
+      "path": "resources/mps-founding-operations/Audit.html",
+      "bytes": 17217
+    },
+    {
+      "path": "resources/mps-founding-operations/Evaluation.html",
+      "bytes": 18993
+    },
+    {
+      "path": "resources/mps-founding-operations/FAQ.html",
+      "bytes": 9329
+    },
+    {
+      "path": "resources/mps-founding-operations/README.md",
+      "bytes": 5494
+    },
+    {
+      "path": "resources/mps-founding-operations/Term_Sheet.html",
+      "bytes": 16065
+    },
+    {
+      "path": "resources/mps-founding-operations/forms.css",
+      "bytes": 4024
+    },
+    {
+      "path": "resources/mps-founding-operations/forms.js",
+      "bytes": 2673
+    },
+    {
+      "path": "resources/mps-founding-operations/index.html",
+      "bytes": 3275
+    },
+    {
+      "path": "resources/mps-founding-operations/output/pdf/MPS_Founding_Application.pdf",
+      "bytes": 728538
+    },
+    {
+      "path": "resources/mps-founding-operations/output/pdf/MPS_Founding_Audit.pdf",
+      "bytes": 1027401
+    },
+    {
+      "path": "resources/mps-founding-operations/output/pdf/MPS_Founding_Evaluation.pdf",
+      "bytes": 929025
+    },
+    {
+      "path": "resources/mps-founding-operations/output/pdf/MPS_Founding_FAQ.pdf",
+      "bytes": 668263
+    },
+    {
+      "path": "resources/mps-founding-operations/output/pdf/MPS_Founding_Term_Sheet.pdf",
+      "bytes": 984809
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/PretendardVariable.woff2",
+      "bytes": 2057688
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/logo-black.png",
+      "bytes": 20892
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-01.jpg",
+      "bytes": 136916
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-02.jpg",
+      "bytes": 191030
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-03.jpg",
+      "bytes": 179575
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-04.jpg",
+      "bytes": 257939
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-05.jpg",
+      "bytes": 196401
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-06.jpg",
+      "bytes": 192919
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-07.jpg",
+      "bytes": 241109
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-08.jpg",
+      "bytes": 239635
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-09.jpg",
+      "bytes": 206258
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-10.jpg",
+      "bytes": 175804
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-11.jpg",
+      "bytes": 174760
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-12.jpg",
+      "bytes": 223817
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/general-example.pdf",
+      "bytes": 1560873
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-01.jpg",
+      "bytes": 203148
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-02.jpg",
+      "bytes": 247984
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-03.jpg",
+      "bytes": 264473
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-04.jpg",
+      "bytes": 267763
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-05.jpg",
+      "bytes": 169644
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/growth-example.pdf",
+      "bytes": 1814684
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/manifest.json",
+      "bytes": 5074
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mental-01.jpg",
+      "bytes": 241071
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mental-02.jpg",
+      "bytes": 236247
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mental-03.jpg",
+      "bytes": 201488
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mental-04.jpg",
+      "bytes": 241574
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mental-example.pdf",
+      "bytes": 6479059
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mobile-growth.png",
+      "bytes": 594700
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mobile-mental.png",
+      "bytes": 468989
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/mobile-physical.png",
+      "bytes": 407086
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/physical-01.jpg",
+      "bytes": 225719
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/physical-02.jpg",
+      "bytes": 255526
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/physical-03.jpg",
+      "bytes": 222360
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/physical-04.jpg",
+      "bytes": 227757
+    },
+    {
+      "path": "resources/mps-report-showcase/assets/reports/physical-example.pdf",
+      "bytes": 7330997
+    },
+    {
+      "path": "resources/mps-report-showcase/design.css",
+      "bytes": 22639
+    },
+    {
+      "path": "resources/mps-report-showcase/gallery.html",
+      "bytes": 15758
+    },
+    {
+      "path": "resources/mps-report-showcase/index.html",
+      "bytes": 20190
+    },
+    {
+      "path": "resources/mps-report-showcase/presentation.html",
+      "bytes": 20200
+    },
+    {
+      "path": "resources/mps-report-showcase/reports.css",
+      "bytes": 8703
+    },
+    {
+      "path": "resources/mps-report-showcase/reports.js",
+      "bytes": 2095
+    },
+    {
+      "path": "resources/mps-report-showcase/viewer.js",
+      "bytes": 3370
+    },
+    {
+      "path": "resources/mpsmanual/index.html",
+      "bytes": 43620
+    },
+    {
+      "path": "resources/rnd/index.html",
+      "bytes": 82633
+    }
+  ]
+}

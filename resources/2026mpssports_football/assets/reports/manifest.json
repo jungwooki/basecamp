@@ -1,0 +1,176 @@
+{
+  "general": {
+    "pages": [
+      {
+        "image": "assets/reports/general-01.jpg",
+        "title": "표지",
+        "page": 1
+      },
+      {
+        "image": "assets/reports/general-02.jpg",
+        "title": "멘탈 종합 결과",
+        "page": 2
+      },
+      {
+        "image": "assets/reports/general-03.jpg",
+        "title": "멘탈 5대 핵심 영역",
+        "page": 3
+      },
+      {
+        "image": "assets/reports/general-04.jpg",
+        "title": "멘탈 8대 세부 지표",
+        "page": 4
+      },
+      {
+        "image": "assets/reports/general-05.jpg",
+        "title": "우선 지원과 가정 실천",
+        "page": 5
+      },
+      {
+        "image": "assets/reports/general-06.jpg",
+        "title": "팀닥터 메시지",
+        "page": 6
+      },
+      {
+        "image": "assets/reports/general-07.jpg",
+        "title": "피지컬 종합 결과",
+        "page": 7
+      },
+      {
+        "image": "assets/reports/general-08.jpg",
+        "title": "자율신경·신체 부하",
+        "page": 8
+      },
+      {
+        "image": "assets/reports/general-09.jpg",
+        "title": "관절 초음파 평가",
+        "page": 9
+      },
+      {
+        "image": "assets/reports/general-10.jpg",
+        "title": "변화와 다음 관리",
+        "page": 10
+      },
+      {
+        "image": "assets/reports/general-11.jpg",
+        "title": "성장 종합분석",
+        "page": 11
+      },
+      {
+        "image": "assets/reports/general-12.jpg",
+        "title": "보호자를 위한 성장 가이드",
+        "page": 12
+      }
+    ],
+    "pdf": "assets/reports/general-example.pdf",
+    "source": "사용자가 제공한 일반 MPS 리포트 PDF / 2026-09-12",
+    "kind": "실제 리포트 · 식별정보 가림"
+  },
+  "mental": {
+    "pages": [
+      {
+        "image": "assets/reports/mental-01.jpg",
+        "title": "성장단계와 멘탈 유형",
+        "page": 1
+      },
+      {
+        "image": "assets/reports/mental-02.jpg",
+        "title": "마음의 강점과 다음 연습",
+        "page": 2
+      },
+      {
+        "image": "assets/reports/mental-03.jpg",
+        "title": "8대 세부지표 비교",
+        "page": 3
+      },
+      {
+        "image": "assets/reports/mental-04.jpg",
+        "title": "보호자·지도자 지원",
+        "page": 4
+      }
+    ],
+    "pdf": "assets/reports/mental-example.pdf",
+    "source": "2026mental/MPS_김해온(샘플)_2회_멘탈리포트.pdf",
+    "kind": "기존 심화 리포트 · 가상 선수 샘플"
+  },
+  "physical": {
+    "pages": [
+      {
+        "image": "assets/reports/physical-01.jpg",
+        "title": "피지컬 종합 결과",
+        "page": 1
+      },
+      {
+        "image": "assets/reports/physical-02.jpg",
+        "title": "체수분·회복·초음파",
+        "page": 2
+      },
+      {
+        "image": "assets/reports/physical-03.jpg",
+        "title": "움직임과 수행능력",
+        "page": 3
+      },
+      {
+        "image": "assets/reports/physical-04.jpg",
+        "title": "변화와 다음 관리",
+        "page": 4
+      }
+    ],
+    "pdf": "assets/reports/physical-example.pdf",
+    "source": "2026physical/피지컬리포트_4페이지_미리보기.pdf",
+    "kind": "기존 심화 리포트 · 가상 선수 샘플"
+  },
+  "growth": {
+    "pages": [
+      {
+        "image": "assets/reports/growth-01.jpg",
+        "title": "성장 종합분석",
+        "page": 1
+      },
+      {
+        "image": "assets/reports/growth-02.jpg",
+        "title": "성장체질",
+        "page": 2
+      },
+      {
+        "image": "assets/reports/growth-03.jpg",
+        "title": "수면·회복",
+        "page": 3
+      },
+      {
+        "image": "assets/reports/growth-04.jpg",
+        "title": "식이영양",
+        "page": 4
+      },
+      {
+        "image": "assets/reports/growth-05.jpg",
+        "title": "보호자 안내",
+        "page": 5
+      }
+    ],
+    "pdf": "assets/reports/growth-example.pdf",
+    "source": "2026growth/성장리포트_5페이지_미리보기.pdf",
+    "kind": "기존 심화 리포트 · 가상 선수 샘플"
+  },
+  "mobile": {
+    "pages": [
+      {
+        "image": "assets/reports/mobile-mental.png",
+        "title": "모바일 멘탈 리포트",
+        "page": 1
+      },
+      {
+        "image": "assets/reports/mobile-physical.png",
+        "title": "모바일 피지컬 리포트",
+        "page": 2
+      },
+      {
+        "image": "assets/reports/mobile-growth.png",
+        "title": "모바일 성장 리포트",
+        "page": 3
+      }
+    ],
+    "source": "20260920mpsparents/assets/images/reports/mobile-*.png · welcome.sportsmps.com 공개 화면과 대조",
+    "kind": "기존 모바일 화면 · 식별정보를 샘플 정보로 대체한 자료"
+  }
+}
