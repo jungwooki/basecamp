@@ -31,3 +31,31 @@
 @media print{.hq-highlight,.console-shortcuts>a{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 .console-shortcuts>a:nth-child(n){background:linear-gradient(120deg,var(--fill-start),var(--fill-end));border:1px solid transparent}
 .resource.hq-highlight{background:linear-gradient(120deg,var(--fill-start),var(--fill-end));border-color:transparent}
+
+/* Circular network, arranged on the three vertices of a triangle. */
+.ecosystem{grid-template-columns:minmax(0,1fr) minmax(320px,440px);padding:30px 40px;gap:36px}
+.ecosystem-model{width:100%;max-width:440px;height:auto;aspect-ratio:440 / 380;justify-self:center}
+.ecosystem-node{width:30%;height:auto;min-height:0;aspect-ratio:1;border-radius:50%;translate:-50% -50%;border:1px solid #dce3f2;background:#fff;box-shadow:0 8px 24px #405e9610;text-align:center}
+.ecosystem-clinic{left:18%;top:20%;right:auto;bottom:auto}
+.ecosystem-center{left:82%;top:20%;right:auto;bottom:auto}
+.ecosystem-team{left:50%;top:80%;right:auto;bottom:auto}
+.ecosystem-node strong{font-size:16px;letter-spacing:.7px}
+.ecosystem-node span{font-size:12px;line-height:1.6;margin-top:6px;white-space:nowrap}
+.ecosystem-hub{left:50%;top:40%;translate:-50% -50%;width:25%;height:auto;aspect-ratio:1;border-radius:50%;gap:10px;background:#fff;border:1px solid #d1dcf1;box-shadow:0 8px 28px #536dae18}
+.ecosystem-hub img{width:66%;height:auto}
+.ecosystem-hub span{font-size:10px;letter-spacing:1.2px}
+.ecosystem-lines path{stroke:#c4d0e7;stroke-width:1.5;stroke-linejoin:round}
+.ecosystem-lines .spokes{stroke:#b6c6e4;stroke-dasharray:3 6}
+.ecosystem-node:hover{transform:translateY(-4px);background:#f2f6ff;box-shadow:0 12px 28px #405e9620}
+.ecosystem-node:focus-visible{outline:3px solid #86aaf0;outline-offset:4px}
+.sidebar nav>a[href="projects.html"]{position:relative;margin-top:20px}
+.sidebar nav>a[href="projects.html"]::before{content:"";position:absolute;top:-12px;left:10px;right:10px;height:1px;background:#dce2ee;pointer-events:none}
+@media(max-width:950px){.ecosystem{grid-template-columns:1fr;padding:28px;gap:20px}.ecosystem-model{max-width:440px}}
+@media(max-width:700px){.ecosystem{padding:24px 16px}.ecosystem-node strong{font-size:13px}.ecosystem-node span{font-size:10px;letter-spacing:-.4px}.ecosystem-hub span{font-size:8px;letter-spacing:.6px}.ecosystem-hub{gap:6px}.sidebar nav>a[href="projects.html"]{margin-top:0;margin-left:12px}.sidebar nav>a[href="projects.html"]::before{top:8px;bottom:8px;left:-8px;right:auto;width:1px;height:auto}}
+@media(prefers-reduced-motion:reduce){.ecosystem-node:hover{transform:none}}
+
+/* Keep rollover text readable on every shared action card. */
+:is(.hq-highlight,.console-shortcuts>a:nth-child(n)):is(:hover,:focus-within){background:#f0f4fc;border-color:#c7d3e9;color:#111}
+:is(.resource,.hq-highlight,.console-shortcuts>a,.report-card,.category,.mental-feature,.nextlocal-strip,.notion-card,.ecosystem-node):is(:hover,:focus-within){color:#111}
+:is(.resource,.hq-highlight,.console-shortcuts>a,.report-card,.category,.mental-feature,.nextlocal-strip,.notion-card,.ecosystem-node):is(:hover,:focus-within) :is(h2,h3,p,small,span,b,strong,a,button){color:#111}
+:is(.resource,.hq-highlight,.console-shortcuts>a,.report-card,.category,.mental-feature,.nextlocal-strip,.notion-card):is(:hover,:focus-within) :is(.button,.primary){background:#fff;border-color:#c7d3e9;color:#111}
