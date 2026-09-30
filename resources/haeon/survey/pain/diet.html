@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해온 다이어트 클리닉 - H-스코어 설문지</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2canvas for Image Export -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Chart.js for Radar Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#EC4899', // Pink 500 (화사하고 트렌디한 해온 핑크)
+                        primaryHover: '#DB2777', // Pink 600
+                        primaryLight: '#FDF2F8', // Pink 50 (매우 연한 핑크 베이스)
+                        surface: '#ffffff',
+                        background: '#FFFBFB', // 웜 화이트 베이스 (차갑지 않은 배경)
+                        border: '#F3E8E9', // 부드러운 경계선
+                        textMain: '#374151', // Gray 700 (너무 까맣지 않은 부드러운 텍스트)
+                        textSub: '#9CA3AF' // Gray 400
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FFFBFB;
+            color: #374151;
+            -webkit-font-smoothing: antialiased;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+            border-color: #EC4899;
+        }
+        /* 프린트/캡처 시 스크롤바 숨김 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* 대형 모니터 터치/클릭 영역 확보 */
+        button { touch-action: manipulation; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const TOTAL_STEPS = 7;
+
+        // --- 설문 옵션 데이터 (타이핑 최소화용) ---
+        const OPTIONS = {
+            dietExperience: ['식단조절(원푸드, 덴마크 등)', '운동(PT, 요가 등)', '양약 복용', '한약 복용', '시술(지방흡입, 주사 등)', '없음'],
+            sideEffects: ['어지러움', '불면증', '두통', '손떨림', '가슴 두근거림', '소화불량', '없음'],
+            diseases: ['고혈압', '당뇨', '고지혈증', '심뇌혈관질환', '지방간', '신장질환', '알레르기', '없음(건강함)'],
+            
+            stressLevel: ['스트레스가 심한 편이다', '스트레스는 견딜만 하다', '신경이 하루종일 예민하다', '일상생활에 지장을 준다', '마음속에 한(울화)이 있다', '삶이 허무하고 우울하다'],
+            lifestyle: ['자유로운 편이다', '타인의 눈치를 많이 본다', '사람들과 잘 어울린다', '혼자 지내는 것을 좋아한다', '규칙적인 취미 생활이 있다'],
+            workLife: ['출퇴근이 자유로운 편', '출퇴근이 왕복 1시간 이상', '야근이 잦다', '회식이 많다', '해당 없음'],
+            
+            eatingHabits: ['식사를 즐긴다', '입이 짧아 잘 안 먹는다', '편식이 심하다', '과식을 자주 한다', '아침을 잘 안 챙겨 먹는다', '탄산음료/과자를 즐긴다', '육류를 즐겨 먹는다', '배가 불러도 계속 먹는다', '배가 고플 때만 먹는다', '스트레스를 음식으로 푼다'],
+            sleepHabits: ['혼자 잔다', '타인과 함께 잔다', '낮잠을 자주 잔다', '잠들기 어렵다'],
+            
+            // H-스코어 한의학 변증 (5장)
+            sysLiver: ['쉽게 피로하고 잘 지친다', '어지럼증이나 두통이 가끔 있다', '짜증이 많고 화를 자주 낸다', '잘 넘어지거나 삐끗한다', '근육/관절에 만성 통증이 있다', '코피가 자주 난다'],
+            sysHeart: ['안색이 자주 창백해진다', '가슴이 두근거리고 잘 놀란다', '깊은 잠을 못 자고 자주 깬다', '특정 부위에 땀을 자주 흘린다', '손발이 자주 저리거나 시리다'],
+            sysSpleen: ['안색이 누렇게 자주 뜬다', '생각이 많고 건망증이 있다', '멀미를 자주 한다', '잘 체하거나 설사/변비/구토가 잦다', '잇몸/입술/입안이 자주 헌다'],
+            sysLung: ['감기에 자주 걸리고 잘 안 낫는다', '기침, 가래, 콧물이 잦다', '추위나 더위를 심하게 탄다', '비염/천식/결막염 진단을 받았다', '피부가 건조하고 가렵다'],
+            sysKidney: ['눈 주위가 붓고 다크서클이 생긴다', '소변색이 짙고 냄새나거나 아프다', '머리숱이 적고 모발이 푸석하다', '방광염/신우신염을 앓은 적 있다', '만성 요통이나 무릎 통증이 있다'],
+            
+            period: ['생리주기가 불규칙하다', '생리통이 심하다', '생리혈에 덩어리가 많다', '생리 전 폭식이 심해진다', '해당 없음(남성 포함)']
+        };
+
+        // --- 공통 컴포넌트 ---
+        const ProgressBar = ({ step }) => (
+            <div className="flex items-center gap-3 mb-10 px-4">
+                {Array.from({ length: TOTAL_STEPS - 1 }).map((_, i) => {
+                    const s = i + 1;
+                    return (
+                        <div key={s} className="flex-1 h-2.5 rounded-full bg-gray-200 overflow-hidden">
+                            <div className={`h-full transition-all duration-700 ${s <= step ? 'bg-primary' : ''}`}></div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+
+        const OptionBtn = ({ label, isSelected, onClick, className = '' }) => (
+            <button
+                onClick={onClick}
+                className={`w-full min-h-[70px] p-5 text-lg rounded-2xl border-2 text-left transition-all duration-200 flex items-center justify-between shadow-sm
+                    ${isSelected 
+                        ? 'bg-primaryLight border-primary text-primary font-bold shadow-md transform scale-[1.01]' 
+                        : 'bg-white border-border text-gray-700 hover:border-primary/40 hover:bg-pink-50/50'
+                    } ${className}`}
+            >
+                <span className="leading-snug">{label}</span>
+                <i className={`fas ${isSelected ? 'fa-check-circle text-2xl' : 'fa-circle text-gray-200 text-2xl'}`}></i>
+            </button>
+        );
+
+        const InputField = ({ label, type="text", value, onChange, placeholder, suffix }) => (
+            <div className="space-y-3">
+                <label className="text-lg font-bold text-gray-700 ml-1">{label}</label>
+                <div className="relative">
+                    <input 
+                        type={type} 
+                        className="w-full p-5 text-xl border-2 border-gray-200 bg-white rounded-2xl focus:border-primary focus:bg-white transition-colors"
+                        value={value} 
+                        onChange={onChange} 
+                        placeholder={placeholder} 
+                    />
+                    {suffix && <span className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-lg">{suffix}</span>}
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [step, setStep] = useState(1);
+            
+            // 초기 상태
+            const defaultState = {
+                name: '', reason: '', targetWeight: '', marriageYear: '',
+                dietExperience: [], sideEffects: [], coffeeAmount: '1', diseases: [],
+                stressLevel: [], lifestyle: [], workLife: [],
+                eatingHabits: [], sleepHabits: [], sleepTime: '', wakeUpTime: '',
+                sysLiver: [], sysHeart: [], sysSpleen: [], sysLung: [], sysKidney: [], period: []
+            };
+
+            const [formData, setFormData] = useState(defaultState);
+            const [isLoaded, setIsLoaded] = useState(false);
+
+            const resultRef = useRef(null);
+            const chartCanvasRef = useRef(null);
+            const chartInstance = useRef(null);
+
+            // 로컬 스토리지 자동 저장 및 불러오기
+            useEffect(() => {
+                const saved = localStorage.getItem('heyonDietForm');
+                if (saved) {
+                    try {
+                        setFormData(JSON.parse(saved));
+                    } catch (e) { console.error('Failed to parse local storage'); }
+                }
+                setIsLoaded(true);
+            }, []);
+
+            useEffect(() => {
+                if (isLoaded) {
+                    localStorage.setItem('heyonDietForm', JSON.stringify(formData));
+                }
+            }, [formData, isLoaded]);
+
+            // 화면 최상단 이동
+            const goToStep = (s) => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setStep(s);
+            };
+
+            // 항목 토글 함수
+            const toggleMulti = (field, val) => {
+                setFormData(prev => {
+                    const arr = prev[field];
+                    if (val.includes('없음')) {
+                        return { ...prev, [field]: arr.includes(val) ? [] : [val] };
+                    }
+                    const newArr = arr.includes(val) ? arr.filter(i => i !== val) : [...arr.filter(i => !i.includes('없음')), val];
+                    return { ...prev, [field]: newArr };
+                });
+            };
+
+            // 차트 렌더링
+            useEffect(() => {
+                if (step === TOTAL_STEPS && chartCanvasRef.current) {
+                    const ctx = chartCanvasRef.current.getContext('2d');
+                    if (chartInstance.current) chartInstance.current.destroy();
+
+                    const scores = [
+                        formData.sysLiver.length,
+                        formData.sysHeart.length,
+                        formData.sysSpleen.length,
+                        formData.sysLung.length,
+                        formData.sysKidney.length
+                    ];
+
+                    chartInstance.current = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['간(스트레스/피로)', '심(수면/순환)', '비(소화/식욕)', '폐(호흡/면역)', '신(비뇨/뼈/수분)'],
+                            datasets: [{
+                                label: '건강 위험도 스코어',
+                                data: scores,
+                                backgroundColor: 'rgba(236, 72, 153, 0.25)',
+                                borderColor: 'rgba(236, 72, 153, 1)',
+                                pointBackgroundColor: '#EC4899',
+                                pointRadius: 5,
+                                borderWidth: 3
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: { 
+                                    min: 0, max: 6, 
+                                    ticks: { stepSize: 1, display: false },
+                                    pointLabels: { font: { size: 14, family: 'Pretendard', weight: 'bold' }, color: '#374151' }
+                                }
+                            },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                }
+            }, [step, formData]);
+
+            // 이미지 다운로드
+            const downloadImage = async () => {
+                if (!resultRef.current) return;
+                const canvas = await html2canvas(resultRef.current, { scale: 2, backgroundColor: '#ffffff' });
+                const link = document.createElement('a');
+                link.download = `해온_H스코어_${formData.name || '무명'}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            };
+
+            const resetForm = () => {
+                if(confirm('작성된 모든 내용을 지우고 처음부터 다시 시작하시겠습니까?')) {
+                    setFormData(defaultState);
+                    localStorage.removeItem('heyonDietForm');
+                    goToStep(1);
+                }
+            };
+
+            if (!isLoaded) return null;
+
+            return (
+                <div className="max-w-5xl mx-auto px-4 py-10 md:py-16">
+                    {/* Header */}
+                    <header className="mb-12 text-center">
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pink-400 to-primary text-white rounded-3xl mb-5 shadow-lg shadow-pink-200 transform hover:scale-105 transition-transform">
+                            <i className="fas fa-spa text-4xl"></i>
+                        </div>
+                        <h1 className="text-4xl font-black text-gray-800 tracking-tight">해온 다이어트 H-SCORE</h1>
+                        <p className="text-pink-400 mt-3 text-lg font-bold">정확한 체질 진단을 위해 솔직하고 자세하게 기입해 주세요.</p>
+                    </header>
+
+                    <main className="bg-white rounded-[2rem] shadow-2xl shadow-pink-900/10 border border-gray-100 p-8 md:p-14 relative overflow-hidden">
+                        {step < TOTAL_STEPS && <ProgressBar step={step} />}
+
+                        {/* Step 1: 기본 정보 */}
+                        {step === 1 && (
+                            <div className="animate-fade-in space-y-10">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">1. 기본 정보 및 다이어트 목표</h2>
+                                </div>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <InputField label="성함" value={formData.name} onChange={e=>setFormData({...formData, name: e.target.value})} placeholder="이름을 입력해 주세요" />
+                                    <InputField label="희망 체중" type="number" value={formData.targetWeight} onChange={e=>setFormData({...formData, targetWeight: e.target.value})} placeholder="목표 몸무게" suffix="kg" />
+                                </div>
+
+                                <div className="space-y-3">
+                                    <label className="text-lg font-bold text-gray-700 ml-1">다이어트를 꼭 해야 하는 절실한 이유가 있나요?</label>
+                                    <textarea 
+                                        className="w-full p-5 text-xl border-2 border-gray-200 bg-white rounded-2xl focus:border-primary transition-colors resize-none" 
+                                        rows="3" 
+                                        value={formData.reason} 
+                                        onChange={e=>setFormData({...formData, reason: e.target.value})} 
+                                        placeholder="예: 웨딩 촬영, 건강 악화, 자존감 회복 등 편하게 적어주세요."
+                                    ></textarea>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <InputField label="결혼 유무 (결혼 연도)" type="text" value={formData.marriageYear} onChange={e=>setFormData({...formData, marriageYear: e.target.value})} placeholder="예: 미혼, 또는 2020년" />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 2: 다이어트 및 의료 이력 */}
+                        {step === 2 && (
+                            <div className="animate-fade-in space-y-10">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">2. 다이어트 및 건강 이력</h2>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-gray-800">최근 6개월 내 시도한 다이어트나 비만 치료 경험 (중복 선택)</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {OPTIONS.dietExperience.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.dietExperience.includes(item)} onClick={()=>toggleMulti('dietExperience', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4 bg-red-50 p-6 rounded-3xl border border-red-100">
+                                    <label className="text-xl font-bold text-red-800 flex items-center gap-2"><i className="fas fa-exclamation-triangle"></i> 약물(다이어트약 등) 부작용이나 커피 명현반응</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {OPTIONS.sideEffects.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sideEffects.includes(item)} onClick={()=>toggleMulti('sideEffects', item)} className="bg-white" />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-gray-800">현재 앓고 있거나 약을 복용 중인 질환 (중복 선택)</label>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        {OPTIONS.diseases.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.diseases.includes(item)} onClick={()=>toggleMulti('diseases', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 3: 스트레스 및 환경 */}
+                        {step === 3 && (
+                            <div className="animate-fade-in space-y-10">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">3. 스트레스 및 생활 환경</h2>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-gray-800">현재 느끼는 스트레스 상태 (중복 선택)</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {OPTIONS.stressLevel.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.stressLevel.includes(item)} onClick={()=>toggleMulti('stressLevel', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-gray-800">나의 성향 및 라이프스타일</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {OPTIONS.lifestyle.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.lifestyle.includes(item)} onClick={()=>toggleMulti('lifestyle', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-gray-800">직장 및 사회 생활 패턴</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {OPTIONS.workLife.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.workLife.includes(item)} onClick={()=>toggleMulti('workLife', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 4: 식습관 및 수면 */}
+                        {step === 4 && (
+                            <div className="animate-fade-in space-y-10">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">4. 식습관 및 수면 습관</h2>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-xl font-bold text-primary flex items-center gap-2"><i className="fas fa-utensils"></i> 평소 식습관을 모두 골라주세요</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {OPTIONS.eatingHabits.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.eatingHabits.includes(item)} onClick={()=>toggleMulti('eatingHabits', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="border-t border-gray-200 pt-8 space-y-6">
+                                    <label className="text-xl font-bold text-primary flex items-center gap-2"><i className="fas fa-bed"></i> 수면 패턴</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                        {OPTIONS.sleepHabits.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sleepHabits.includes(item)} onClick={()=>toggleMulti('sleepHabits', item)} />
+                                        ))}
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-50 p-6 rounded-3xl">
+                                        <InputField label="보통 취침 시간" type="time" value={formData.sleepTime} onChange={e=>setFormData({...formData, sleepTime: e.target.value})} />
+                                        <InputField label="보통 기상 시간" type="time" value={formData.wakeUpTime} onChange={e=>setFormData({...formData, wakeUpTime: e.target.value})} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 5: 변증 1 (간/심/비) */}
+                        {step === 5 && (
+                            <div className="animate-fade-in space-y-12">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">5. 나의 몸 상태 체크 (1)</h2>
+                                    <p className="text-gray-500 mt-2 font-medium">해당되는 증상을 모두 선택해주세요.</p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-2xl font-bold text-green-700 flex items-center gap-3"><i className="fas fa-battery-quarter"></i> 간(肝) 계통 : 피로와 근육</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.sysLiver.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysLiver.includes(item)} onClick={()=>toggleMulti('sysLiver', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-2xl font-bold text-red-600 flex items-center gap-3"><i className="fas fa-heartbeat"></i> 심(心) 계통 : 순환과 수면</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.sysHeart.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysHeart.includes(item)} onClick={()=>toggleMulti('sysHeart', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-2xl font-bold text-yellow-600 flex items-center gap-3"><i className="fas fa-hamburger"></i> 비(脾) 계통 : 소화와 영양</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.sysSpleen.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysSpleen.includes(item)} onClick={()=>toggleMulti('sysSpleen', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 6: 변증 2 (폐/신/여성) */}
+                        {step === 6 && (
+                            <div className="animate-fade-in space-y-12">
+                                <div className="border-b-4 border-primary pb-3 inline-block">
+                                    <h2 className="text-3xl font-bold text-gray-800">6. 나의 몸 상태 체크 (2)</h2>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-2xl font-bold text-gray-600 flex items-center gap-3"><i className="fas fa-wind"></i> 폐(肺) 계통 : 호흡기와 면역</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.sysLung.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysLung.includes(item)} onClick={()=>toggleMulti('sysLung', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-2xl font-bold text-blue-600 flex items-center gap-3"><i className="fas fa-water"></i> 신(腎) 계통 : 비뇨기와 뼈</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.sysKidney.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysKidney.includes(item)} onClick={()=>toggleMulti('sysKidney', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4 bg-pink-50 p-6 rounded-3xl border border-pink-100">
+                                    <label className="text-2xl font-bold text-pink-600 flex items-center gap-3"><i className="fas fa-venus"></i> 여성 건강 및 월경</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {OPTIONS.period.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.period.includes(item)} onClick={()=>toggleMulti('period', item)} className="bg-white" />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Step 7: 최종 리포트 */}
+                        {step === TOTAL_STEPS && (
+                            <div className="animate-fade-in space-y-8">
+                                <div ref={resultRef} className="bg-white p-8 md:p-12 rounded-[2rem] border-2 border-primary/20 shadow-xl overflow-hidden relative">
+                                    
+                                    {/* 워터마크 느낌의 배경 로고 */}
+                                    <div className="absolute -right-10 -top-10 opacity-5 pointer-events-none">
+                                        <i className="fas fa-leaf text-[20rem]"></i>
+                                    </div>
+
+                                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b-4 border-primary pb-6 mb-10 relative z-10">
+                                        <div>
+                                            <h2 className="text-4xl font-black text-primary tracking-tighter">H-SCORE REPORT</h2>
+                                            <p className="text-sm text-gray-500 font-bold mt-2">해온 다이어트 클리닉 체질 분석</p>
+                                        </div>
+                                        <div className="mt-4 md:mt-0 text-left md:text-right">
+                                            <span className="text-3xl font-black text-gray-800">{formData.name || '고객'} 님</span>
+                                            <p className="text-lg font-bold text-gray-500 mt-1">목표 체중: {formData.targetWeight ? `${formData.targetWeight}kg` : '미입력'}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+                                        {/* 좌측: 레이더 차트 */}
+                                        <div className="lg:col-span-5 space-y-8">
+                                            <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-200 flex flex-col items-center shadow-inner">
+                                                <h4 className="text-lg font-black text-gray-700 mb-6 flex items-center gap-2"><i className="fas fa-chart-radar text-primary"></i> 5장(五臟) 밸런스 맵</h4>
+                                                <div className="w-full aspect-square max-w-[320px]">
+                                                    <canvas ref={chartCanvasRef}></canvas>
+                                                </div>
+                                                <p className="text-sm text-gray-500 mt-4 text-center">그래프가 넓게 퍼져있을 수록 해당 계통의 증상이 많음을 의미합니다.</p>
+                                            </div>
+                                        </div>
+
+                                        {/* 우측: 요약 데이터 */}
+                                        <div className="lg:col-span-7 space-y-8">
+                                            <section>
+                                                <h4 className="text-xl font-black text-primary mb-4 border-b-2 border-gray-100 pb-2"><i className="fas fa-flag mr-2"></i> 절실한 다이어트 목표</h4>
+                                                <p className="text-lg text-gray-700 bg-pink-50 p-5 rounded-2xl font-medium leading-relaxed shadow-inner">
+                                                    {formData.reason || "입력된 내용이 없습니다."}
+                                                </p>
+                                            </section>
+
+                                            <section>
+                                                <h4 className="text-xl font-black text-primary mb-4 border-b-2 border-gray-100 pb-2"><i className="fas fa-history mr-2"></i> 과거력 및 주의사항</h4>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="bg-gray-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">다이어트 경험</span>
+                                                        <span className="font-bold text-gray-800">{formData.dietExperience.join(', ') || '없음'}</span>
+                                                    </div>
+                                                    <div className="bg-red-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-red-400 mb-1">약물/커피 부작용</span>
+                                                        <span className="font-bold text-red-800">{formData.sideEffects.join(', ') || '없음'}</span>
+                                                    </div>
+                                                    <div className="bg-gray-50 p-4 rounded-xl col-span-2">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">현재 질환</span>
+                                                        <span className="font-bold text-gray-800">{formData.diseases.join(', ') || '없음'}</span>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h4 className="text-xl font-black text-primary mb-4 border-b-2 border-gray-100 pb-2"><i className="fas fa-bed mr-2"></i> 생활 및 수면</h4>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="bg-gray-50 p-4 rounded-xl col-span-2">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">식습관</span>
+                                                        <span className="font-bold text-gray-800">{formData.eatingHabits.join(', ') || '-'}</span>
+                                                    </div>
+                                                    <div className="bg-gray-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">스트레스</span>
+                                                        <span className="font-bold text-gray-800">{formData.stressLevel.join(', ') || '-'}</span>
+                                                    </div>
+                                                    <div className="bg-gray-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">라이프스타일</span>
+                                                        <span className="font-bold text-gray-800">{formData.lifestyle.join(', ') || '-'}</span>
+                                                    </div>
+                                                    <div className="bg-gray-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">직장/사회생활</span>
+                                                        <span className="font-bold text-gray-800">{formData.workLife.join(', ') || '-'}</span>
+                                                    </div>
+                                                    <div className="bg-gray-50 p-4 rounded-xl">
+                                                        <span className="block text-sm font-bold text-gray-400 mb-1">수면 패턴 (시간)</span>
+                                                        <span className="font-bold text-gray-800">
+                                                            {formData.sleepHabits.join(', ') || '-'} 
+                                                            {formData.sleepTime && ` (${formData.sleepTime} ~ ${formData.wakeUpTime})`}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+
+                                    {/* 상세 체크 항목 (변증) */}
+                                    <div className="mt-12 pt-8 border-t-2 border-dashed border-pink-200 relative z-10">
+                                        <h4 className="text-xl font-black text-primary mb-6 text-center">체질 및 장부 변증 상세 항목</h4>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {[
+                                                { title: '간(肝) 계통', items: formData.sysLiver, icon: 'battery-quarter', color: 'text-green-600' },
+                                                { title: '심(心) 계통', items: formData.sysHeart, icon: 'heartbeat', color: 'text-red-500' },
+                                                { title: '비(脾) 계통', items: formData.sysSpleen, icon: 'hamburger', color: 'text-yellow-600' },
+                                                { title: '폐(肺) 계통', items: formData.sysLung, icon: 'wind', color: 'text-gray-500' },
+                                                { title: '신(腎) 계통', items: formData.sysKidney, icon: 'water', color: 'text-blue-500' },
+                                                { title: '여성 건강', items: formData.period, icon: 'venus', color: 'text-pink-500' }
+                                            ].map(cat => (
+                                                <div key={cat.title} className={`p-5 rounded-2xl border bg-white shadow-sm ${cat.items.length > 0 ? 'border-pink-200' : 'border-gray-100 opacity-60'}`}>
+                                                    <h5 className={`text-lg font-bold mb-3 flex items-center gap-2 ${cat.color}`}><i className={`fas fa-${cat.icon}`}></i> {cat.title}</h5>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {cat.items.length > 0 ? cat.items.map(it => (
+                                                            <span key={it} className="text-sm bg-pink-50 text-primary px-3 py-1.5 rounded-lg font-medium border border-pink-100">{it}</span>
+                                                        )) : <span className="text-sm text-gray-400 font-medium">체크 항목 없음</span>}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-16 text-center relative z-10">
+                                        <p className="text-2xl font-black text-primary">"다 잘 될 겁니다! 잊지마세요, 저희는 늘 당신 편입니다."</p>
+                                    </div>
+                                </div>
+
+                                {/* 액션 버튼들 */}
+                                <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
+                                    <button onClick={downloadImage} className="py-5 px-8 bg-gray-800 text-white rounded-2xl font-bold text-xl hover:bg-black transition-all shadow-xl flex items-center justify-center gap-3">
+                                        <i className="far fa-save text-2xl"></i> 결과 이미지 저장하기
+                                    </button>
+                                    <button onClick={resetForm} className="py-5 px-8 bg-white border-2 border-gray-200 text-gray-500 rounded-2xl font-bold text-xl hover:bg-gray-50 transition-all">
+                                        처음부터 다시 쓰기
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Navigation Buttons */}
+                        {step < TOTAL_STEPS && (
+                            <div className="flex justify-between items-center mt-16 pt-8 border-t-2 border-gray-100">
+                                {step > 1 ? (
+                                    <button onClick={()=>goToStep(step-1)} className="px-8 py-4 text-gray-500 font-bold text-lg hover:bg-gray-100 rounded-xl transition-colors">
+                                        <i className="fas fa-chevron-left mr-2"></i> 이전
+                                    </button>
+                                ) : <div></div>}
+                                
+                                <button onClick={()=>goToStep(step+1)} className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primaryHover transition-all shadow-xl shadow-pink-900/20 flex items-center gap-3">
+                                    {step === TOTAL_STEPS - 1 ? '최종 결과 보기' : '다음으로'}
+                                    <i className="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

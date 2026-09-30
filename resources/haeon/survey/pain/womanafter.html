@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해온 산후조리 정밀 문진 시스템</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2canvas for Image Export -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // 에메랄드 그린
+                        primaryHover: '#059669',
+                        primaryLight: '#ECFDF5', 
+                        surface: '#ffffff',
+                        background: '#f8fafc',
+                        border: '#e2e8f0',
+                        textMain: '#1e293b',
+                        textSub: '#64748b'
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            -webkit-font-smoothing: antialiased;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            border-color: #10B981;
+        }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // 설문 옵션 데이터
+        const OPTIONS = {
+            helpers: ['친정엄마', '시부모님', '남편', '산후도우미', '기타'],
+            physicalSymptoms: [
+                '관절, 근육 등이 차고 시리면서 통증이 있다',
+                '몸이 전반적으로 안 좋고 예민해져 있다',
+                '아이 보는 것이 너무 힘들다',
+                '가족들이 현재 상황을 잘 이해해주고 돕는다',
+                '우울감이 심해 모두가 밉고 짜증이 난다',
+                '현기증이나 실신 증상이 있었다',
+                '임신 후유증이 굉장히 심했다'
+            ],
+            recoverySpeed: ['보통', '느리다 (멍/붓기가 늦게 빠짐)', '자주 다치고 만성화됨'],
+            birthMethod: ['자연분만', '제왕절개'],
+            sweat: ['보통', '많이 줄었다', '많이 늘었다'],
+            swelling: ['보통', '전신에 붓기가 있다', '부분적으로 붓기가 있다'],
+            bowel: ['보통', '변비가 있다', '시원하지 않다', '설사를 하는 편이다'],
+            urine: ['보통', '자주 본다', '시원하지 않다', '적게 간다'],
+            digestion: ['보통', '임신 전보다 안 된다', '원래 잘 안 된다', '자주 체한다'],
+            appetite: ['보통', '증가되었다', '별로 없다'],
+            thirst: ['보통', '갈증이 있다', '아주 심하다'],
+            diseaseHistory: ['임신 중 고혈압', '임신 중 당뇨', '빈혈', '심장질환', '알레르기', '자궁 질환'],
+            mealHabit: ['규칙적', '불규칙적', '아침 거름'],
+            exercise: ['규칙적', '불규칙적', '거의 하지 않음']
+        };
+
+        const TOTAL_STEPS = 7;
+
+        // UI Components
+        const ProgressBar = ({ step }) => (
+            <div className="flex items-center gap-2 mb-8 no-print">
+                {[1, 2, 3, 4, 5, 6].map(s => (
+                    <div key={s} className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+                        <div className={`h-full transition-all duration-300 ${s <= step ? 'bg-primary' : ''}`}></div>
+                    </div>
+                ))}
+                <span className="ml-3 text-sm font-bold text-gray-400">{step} / 6</span>
+            </div>
+        );
+
+        const SectionTitle = ({ title, desc }) => (
+            <div className="mb-5 border-l-4 border-primary pl-3">
+                <h3 className="text-lg font-bold text-textMain">{title}</h3>
+                {desc && <p className="text-sm text-textSub mt-1">{desc}</p>}
+            </div>
+        );
+
+        const OptionBtn = ({ label, isSelected, onClick }) => (
+            <button
+                onClick={onClick}
+                className={`p-3 text-sm md:text-base rounded-xl border text-left transition-all flex items-center justify-between
+                    ${isSelected 
+                        ? 'bg-primaryLight border-primary text-primaryHover font-bold shadow-sm' 
+                        : 'bg-white border-border text-textMain hover:border-primary/40'
+                    }`}
+            >
+                <span>{label}</span>
+                <i className={`fas fa-check-circle ${isSelected ? 'text-primary' : 'text-gray-200'}`}></i>
+            </button>
+        );
+
+        const TextInput = ({ label, value, onChange, placeholder, type="text" }) => (
+            <div>
+                {label && <label className="block text-sm font-semibold text-textMain mb-1.5">{label}</label>}
+                <input type={type} value={value} onChange={e => onChange(e.target.value)}
+                    placeholder={placeholder} className="w-full px-4 py-2.5 text-sm border border-border rounded-lg" />
+            </div>
+        );
+
+        function App() {
+            const [step, setStep] = useState(1);
+            const [formData, setFormData] = useState({
+                name: '', birthDate: '', birthMethod: '', babyWeight: '',
+                preWeight: '', maxWeight: '', curWeight: '', birthCount: '',
+                centerDays: '', hospitalDays: '', helpers: [],
+                physicalSymptoms: [], recoverySpeed: '보통',
+                sweat: '보통', swelling: '보통', bowel: '보통', urine: '보통', 
+                digestion: '보통', appetite: '보통', thirst: '보통',
+                pastDisease: [], surgeryHistory: '',
+                mealHabit: '규칙적', sleepTime: '', exercise: '불규칙적',
+                additionalInfo: ''
+            });
+
+            const resultRef = useRef(null);
+            const chartCanvasRef = useRef(null);
+            const chartInstance = useRef(null);
+
+            useEffect(() => {
+                if (step === TOTAL_STEPS && chartCanvasRef.current) {
+                    const ctx = chartCanvasRef.current.getContext('2d');
+                    if (chartInstance.current) chartInstance.current.destroy();
+
+                    const calculateScore = () => {
+                        const scores = [8, 8, 8, 8, 8];
+                        scores[0] -= formData.physicalSymptoms.length;
+                        if (formData.recoverySpeed !== '보통') scores[0] -= 2;
+                        if (formData.swelling !== '보통') scores[1] -= 3;
+                        if (formData.sweat !== '보통') scores[1] -= 2;
+                        if (formData.digestion !== '보통') scores[2] -= 2;
+                        if (formData.appetite === '별로 없다') scores[2] -= 3;
+                        if (formData.bowel !== '보통') scores[3] -= 2;
+                        if (formData.urine !== '보통') scores[3] -= 2;
+                        if (formData.physicalSymptoms.some(s => s.includes('우울') || s.includes('힘들다'))) scores[4] -= 4;
+                        return scores.map(s => Math.max(2, s));
+                    };
+
+                    chartInstance.current = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['근골격 회복', '순환/붓기', '소화/영양', '배설 기능', '심리적 안정'],
+                            datasets: [{
+                                data: calculateScore(),
+                                backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                                borderColor: 'rgba(16, 185, 129, 1)',
+                                borderWidth: 2,
+                                pointBackgroundColor: '#10B981'
+                            }]
+                        },
+                        options: {
+                            scales: { r: { min: 0, max: 10, ticks: { display: false } } },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                }
+            }, [step, formData]);
+
+            const handleNext = () => step < TOTAL_STEPS && setStep(step + 1);
+            const handlePrev = () => step > 1 && setStep(step - 1);
+
+            const toggleMulti = (field, val) => {
+                setFormData(prev => ({
+                    ...prev,
+                    [field]: prev[field].includes(val) ? prev[field].filter(v => v !== val) : [...prev[field], val]
+                }));
+            };
+
+            const downloadImage = async () => {
+                const canvas = await html2canvas(resultRef.current, { scale: 2 });
+                const link = document.createElement('a');
+                link.download = `${formData.name || '산모'}_산후문진결과.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            };
+
+            const SummaryItem = ({ label, value }) => (
+                <div className="flex flex-col p-3 bg-gray-50 rounded-lg border border-gray-100">
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</span>
+                    <span className="text-sm font-semibold text-gray-700">{value || '-'}</span>
+                </div>
+            );
+
+            const renderStep = () => {
+                switch(step) {
+                    case 1: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="출산 기본 정보" desc="출산일과 아이의 상태를 알려주세요." />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <TextInput label="성함" value={formData.name} onChange={v => setFormData({...formData, name: v})} placeholder="성함 입력" />
+                                <TextInput label="출산일" type="date" value={formData.birthDate} onChange={v => setFormData({...formData, birthDate: v})} />
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                {OPTIONS.birthMethod.map(m => (
+                                    <OptionBtn key={m} label={m} isSelected={formData.birthMethod === m} onClick={() => setFormData({...formData, birthMethod: m})} />
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <TextInput label="아이 몸무게 (kg)" value={formData.babyWeight} onChange={v => setFormData({...formData, babyWeight: v})} placeholder="예: 3.2" />
+                                <TextInput label="출산 횟수(째)" value={formData.birthCount} onChange={v => setFormData({...formData, birthCount: v})} placeholder="예: 첫" />
+                            </div>
+                        </div>
+                    );
+                    case 2: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="조리 환경 및 지원" desc="누가 산후조리를 도와주고 계신가요?" />
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <TextInput label="조리원 기간 (일)" value={formData.centerDays} onChange={v => setFormData({...formData, centerDays: v})} placeholder="예: 14" />
+                                <TextInput label="병원 입원 기간 (일)" value={formData.hospitalDays} onChange={v => setFormData({...formData, hospitalDays: v})} placeholder="예: 5" />
+                            </div>
+                            <label className="block text-sm font-semibold mb-2">함께 도와주시는 분 (다중 선택)</label>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                {OPTIONS.helpers.map(h => (
+                                    <OptionBtn key={h} label={h} isSelected={formData.helpers.includes(h)} onClick={() => toggleMulti('helpers', h)} />
+                                ))}
+                            </div>
+                        </div>
+                    );
+                    case 3: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="체중 및 신체 변화" desc="출산 전후의 변화를 체크합니다." />
+                            <div className="grid grid-cols-3 gap-4">
+                                <TextInput label="임신 전 체중(kg)" value={formData.preWeight} onChange={v => setFormData({...formData, preWeight: v})} />
+                                <TextInput label="만삭 시 체중(kg)" value={formData.maxWeight} onChange={v => setFormData({...formData, maxWeight: v})} />
+                                <TextInput label="현재 체중(kg)" value={formData.curWeight} onChange={v => setFormData({...formData, curWeight: v})} />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="text-sm font-bold mb-2 block">부종 상태</label>
+                                    <div className="space-y-2">
+                                        {OPTIONS.swelling.map(s => <OptionBtn key={s} label={s} isSelected={formData.swelling === s} onClick={() => setFormData({...formData, swelling: s})} />)}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="text-sm font-bold mb-2 block">땀의 변화</label>
+                                    <div className="space-y-2">
+                                        {OPTIONS.sweat.map(s => <OptionBtn key={s} label={s} isSelected={formData.sweat === s} onClick={() => setFormData({...formData, sweat: s})} />)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    case 4: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="현재 정서 및 통증 상태" desc="가장 중요한 현재의 컨디션입니다." />
+                            <div className="grid grid-cols-1 gap-2">
+                                {OPTIONS.physicalSymptoms.map(s => (
+                                    <OptionBtn key={s} label={s} isSelected={formData.physicalSymptoms.includes(s)} onClick={() => toggleMulti('physicalSymptoms', s)} />
+                                ))}
+                            </div>
+                            <div className="mt-4">
+                                <label className="text-sm font-bold mb-2 block">평소 상처 회복 속도</label>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    {OPTIONS.recoverySpeed.map(r => <OptionBtn key={r} label={r} isSelected={formData.recoverySpeed === r} onClick={() => setFormData({...formData, recoverySpeed: r})} />)}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    case 5: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="소화 및 배설 상태" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label className="text-sm font-bold mb-2 block">소화</label><div className="space-y-2">{OPTIONS.digestion.map(o => <OptionBtn key={o} label={o} isSelected={formData.digestion === o} onClick={() => setFormData({...formData, digestion: o})} />)}</div></div>
+                                <div><label className="text-sm font-bold mb-2 block">대변</label><div className="space-y-2">{OPTIONS.bowel.map(o => <OptionBtn key={o} label={o} isSelected={formData.bowel === o} onClick={() => setFormData({...formData, bowel: o})} />)}</div></div>
+                                <div><label className="text-sm font-bold mb-2 block">소변</label><div className="space-y-2">{OPTIONS.urine.map(o => <OptionBtn key={o} label={o} isSelected={formData.urine === o} onClick={() => setFormData({...formData, urine: o})} />)}</div></div>
+                                <div><label className="text-sm font-bold mb-2 block">입맛</label><div className="space-y-2">{OPTIONS.appetite.map(o => <OptionBtn key={o} label={o} isSelected={formData.appetite === o} onClick={() => setFormData({...formData, appetite: o})} />)}</div></div>
+                                <div><label className="text-sm font-bold mb-2 block">갈증</label><div className="space-y-2">{OPTIONS.thirst.map(o => <OptionBtn key={o} label={o} isSelected={formData.thirst === o} onClick={() => setFormData({...formData, thirst: o})} />)}</div></div>
+                            </div>
+                        </div>
+                    );
+                    case 6: return (
+                        <div className="space-y-6 animate-fade-in">
+                            <SectionTitle title="생활 습관 및 병력" />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                {OPTIONS.diseaseHistory.map(d => <OptionBtn key={d} label={d} isSelected={formData.pastDisease.includes(d)} onClick={() => toggleMulti('pastDisease', d)} />)}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <TextInput label="최근 수술/치료 이력" value={formData.surgeryHistory} onChange={v => setFormData({...formData, surgeryHistory: v})} placeholder="내용 입력" />
+                                <TextInput label="평소 수면 시간" value={formData.sleepTime} onChange={v => setFormData({...formData, sleepTime: v})} placeholder="예: 11시 취침, 7시 기상" />
+                                <div className="md:col-span-2">
+                                    <label className="text-sm font-bold mb-2 block">운동 습관</label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {OPTIONS.exercise.map(e => <OptionBtn key={e} label={e} isSelected={formData.exercise === e} onClick={() => setFormData({...formData, exercise: e})} />)}
+                                    </div>
+                                </div>
+                            </div>
+                            <textarea className="w-full p-4 border border-border rounded-xl mt-4 h-32" placeholder="기타 더 궁금하시거나 진료받고 싶은 부분" value={formData.additionalInfo} onChange={e => setFormData({...formData, additionalInfo: e.target.value})}></textarea>
+                        </div>
+                    );
+                    case 7: return (
+                        <div className="animate-fade-in space-y-8">
+                            <div ref={resultRef} className="bg-white p-8 rounded-2xl border-2 border-primaryLight shadow-lg max-w-full">
+                                <div className="flex justify-between items-center border-b-2 border-primary pb-4 mb-6">
+                                    <h2 className="text-2xl font-bold text-primary">산후 회복 정밀 리포트</h2>
+                                    <div className="text-right">
+                                        <span className="text-lg font-bold text-gray-700">{formData.name || '미기입'} 산모님</span>
+                                        <p className="text-xs text-gray-400">분석일: {new Date().toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                    {/* 왼쪽: 차트 및 핵심 지표 */}
+                                    <div className="lg:col-span-1 space-y-6">
+                                        <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                                            <canvas ref={chartCanvasRef}></canvas>
+                                            <p className="text-[10px] text-center text-gray-400 mt-2">* 지표가 바깥쪽일수록 해당 기능의 회복력이 높음을 의미합니다.</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <SummaryItem label="출산일" value={formData.birthDate} />
+                                            <SummaryItem label="분만 방식" value={formData.birthMethod} />
+                                            <SummaryItem label="아기 정보" value={`${formData.babyWeight}kg / ${formData.birthCount}째`} />
+                                            <SummaryItem label="조리 도움" value={formData.helpers.join(', ')} />
+                                        </div>
+                                    </div>
+
+                                    {/* 오른쪽: 상세 데이터 집계 */}
+                                    <div className="lg:col-span-2 space-y-6">
+                                        {/* 섹션 1: 신체 지표 변화 */}
+                                        <div>
+                                            <h4 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                                                <i className="fas fa-weight"></i> 신체 지표 및 순환
+                                            </h4>
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                <SummaryItem label="임신 전 체중" value={`${formData.preWeight}kg`} />
+                                                <SummaryItem label="만삭 체중" value={`${formData.maxWeight}kg`} />
+                                                <SummaryItem label="현재 체중" value={`${formData.curWeight}kg`} />
+                                                <SummaryItem label="부종 상태" value={formData.swelling} />
+                                                <SummaryItem label="땀의 변화" value={formData.sweat} />
+                                                <SummaryItem label="회복 속도" value={formData.recoverySpeed} />
+                                            </div>
+                                        </div>
+
+                                        {/* 섹션 2: 소화 및 배설 */}
+                                        <div>
+                                            <h4 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                                                <i className="fas fa-utensils"></i> 소화 및 대사 기능
+                                            </h4>
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                <SummaryItem label="소화 상태" value={formData.digestion} />
+                                                <SummaryItem label="대변 상태" value={formData.bowel} />
+                                                <SummaryItem label="소변 상태" value={formData.urine} />
+                                                <SummaryItem label="입맛" value={formData.appetite} />
+                                                <SummaryItem label="갈증" value={formData.thirst} />
+                                                <SummaryItem label="식습관" value={formData.mealHabit} />
+                                            </div>
+                                        </div>
+
+                                        {/* 섹션 3: 생활 및 병력 */}
+                                        <div>
+                                            <h4 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                                                <i className="fas fa-notes-medical"></i> 생활 습관 및 병력
+                                            </h4>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <SummaryItem label="과거 병력" value={formData.pastDisease.join(', ') || '없음'} />
+                                                <SummaryItem label="수술/치료 이력" value={formData.surgeryHistory || '없음'} />
+                                                <SummaryItem label="수면 시간" value={formData.sleepTime} />
+                                                <SummaryItem label="운동 습관" value={formData.exercise} />
+                                            </div>
+                                        </div>
+
+                                        {/* 섹션 4: 정서 및 통증 (체크리스트 전체) */}
+                                        <div>
+                                            <h4 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                                                <i className="fas fa-exclamation-triangle"></i> 주요 불편 증상 (전체)
+                                            </h4>
+                                            <div className="bg-primaryLight/30 p-4 rounded-xl border border-primaryLight text-sm leading-relaxed text-gray-700">
+                                                {formData.physicalSymptoms.length > 0 ? (
+                                                    <ul className="list-disc pl-4 space-y-1">
+                                                        {formData.physicalSymptoms.map((s, i) => <li key={i}>{s}</li>)}
+                                                    </ul>
+                                                ) : '기타 불편 증상 없음'}
+                                            </div>
+                                        </div>
+
+                                        {/* 섹션 5: 기타 요청사항 */}
+                                        {formData.additionalInfo && (
+                                            <div>
+                                                <h4 className="text-sm font-bold text-primary mb-3">의료진에게 남기는 말</h4>
+                                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-sm text-gray-600">
+                                                    {formData.additionalInfo}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="mt-8 pt-6 border-t text-center text-primaryHover font-medium italic text-sm">
+                                    "해온은 산모님의 건강한 일상 회복을 진심으로 응원합니다."
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-3 no-print">
+                                <button onClick={downloadImage} className="w-full py-4 bg-primary text-white rounded-xl font-bold hover:bg-primaryHover shadow-lg flex items-center justify-center gap-2 transition-all transform hover:-translate-y-1">
+                                    <i className="far fa-image text-xl"></i> 리포트 이미지 저장하기
+                                </button>
+                                <button onClick={() => window.location.reload()} className="text-sm text-gray-400 underline py-2 hover:text-gray-600">처음부터 다시 작성하기</button>
+                            </div>
+                        </div>
+                    );
+                }
+            };
+
+            return (
+                <div className="min-h-screen py-10 px-4 flex justify-center items-start">
+                    <div className="max-w-4xl w-full">
+                        <div className="flex items-center gap-3 mb-8 no-print">
+                            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white text-2xl shadow-md">
+                                <i className="fas fa-leaf"></i>
+                            </div>
+                            <div>
+                                <h1 className="text-2xl font-bold text-textMain">해온 산후 정밀 문진</h1>
+                                <p className="text-sm text-textSub">산모님의 체계적인 회복 관리를 위한 맞춤형 설문입니다.</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-slate-100 relative overflow-hidden">
+                            {step < TOTAL_STEPS && <ProgressBar step={step} />}
+                            
+                            <div className="min-h-[450px]">
+                                {renderStep()}
+                            </div>
+
+                            {step < TOTAL_STEPS && (
+                                <div className="mt-10 flex justify-between items-center pt-6 border-t border-slate-100 no-print">
+                                    <button onClick={handlePrev} className={`px-6 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors ${step === 1 ? 'invisible' : ''}`}>
+                                        <i className="fas fa-arrow-left mr-2"></i> 이전 단계
+                                    </button>
+                                    <button onClick={handleNext} className="px-10 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primaryHover shadow-md transition-all flex items-center transform active:scale-95">
+                                        {step === 6 ? '정밀 분석 결과 확인' : '다음 단계로'} <i className="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

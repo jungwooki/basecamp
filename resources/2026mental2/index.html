@@ -39,7 +39,8 @@
 .program-support{display:grid;grid-template-columns:1fr 5mm 10mm 5mm 1fr;gap:1mm;align-items:center;text-align:center}.program-support>div{background:#fffdf8;border-radius:7px;padding:1.8mm 1mm;font-size:9px}.program-support>div b{font-weight:600;display:block;color:var(--green)}.program-support>div span{display:block;font-size:8px;color:var(--sub);margin-top:.6mm}.program-child{display:flex;align-items:center;justify-content:center;border-radius:50%;width:10mm;height:10mm;background:#df8060;color:white;font-size:11px}.program-link{color:#ae9679;font-size:13px}
 .program-steps{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e1d8c8;padding-top:2mm;font-size:9px;color:#6e6557}.program-steps b{color:var(--orange);margin-right:1.5mm}.program-steps i{font-style:normal;color:#ad9577}
 .program-diary{display:flex;align-items:center;gap:2mm;border:1px solid #e3ddcf;border-radius:8px;background:#fffdf8;padding:2mm 3mm}.program-diary svg{width:6mm;height:8mm;color:var(--orange);flex-shrink:0}.program-diary h4{font-size:11px;color:var(--ink)}.program-diary p{font-size:9px;color:var(--sub);margin-top:.5mm}.program-diary>span{margin-left:auto;white-space:nowrap;border-radius:20px;background:#f5ead6;color:#967041;font-size:8px;font-weight:700;padding:1mm 2mm}
-</style></head><body>
+</style><link rel="stylesheet" href="../../typography.css" data-basecamp-typography>
+</head><body>
 <nav class="toolbar" aria-label="선수 선택 및 출력"><input hidden id="search" aria-label="선수명 또는 소속 검색" placeholder="이름·소속 검색"><select id="athleteSelect" aria-label="선수 및 측정일"></select><button hidden id="lateFilter" aria-pressed="false">만숙형 모아보기</button><button class="print" id="printBtn">4페이지 인쇄 / PDF</button><small id="filterCount" hidden></small><small>선수 정보·점수·평균 모두 가상 예시</small></nav>
 <div class="empty" id="empty" hidden>조건에 맞는 기록이 없습니다. 검색어 또는 만숙형 필터를 바꿔주세요.</div>
 <main class="report" id="report">

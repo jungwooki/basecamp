@@ -74,6 +74,7 @@
     .km-box.structure { border-left-color: #10b981; background: #ecfdf5; }
     .km-box.warning { border-left-color: #ef4444; background: #fef2f2; }
   </style>
+<link rel="stylesheet" href="../../typography.css" data-basecamp-typography>
 </head>
 <body class="antialiased">
   <div id="root"></div>
@@ -856,7 +857,7 @@
 
       const handleSubmit = (e) => {
         e.preventDefault();
-        if (validUsers.includes(userId) && password === '2') {
+        if (userId === 'admin' && password === '1824') {
           onLogin(userId);
         } else {
           setError('아이디 또는 비밀번호를 확인해주세요.');

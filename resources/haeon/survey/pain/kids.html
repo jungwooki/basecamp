@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해온 한방소아청소년과 정밀 문진표</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2canvas for Image Export -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Chart.js for Radar Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFC800', // 해온 옐로우 (밝고 따뜻한 노란색)
+                        primaryHover: '#E5B400', // Hover 시 약간 진한 노란색
+                        primaryLight: '#FFF9E5', // 아주 연한 노란색 배경
+                        surface: '#ffffff',
+                        background: '#f9fafb', // Gray-50 (깔끔한 병원 느낌)
+                        border: '#e5e7eb',
+                        textMain: '#374151', // Gray-700
+                        textSub: '#6b7280' // Gray-500
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            -webkit-font-smoothing: antialiased;
+        }
+        input[type="text"], input[type="number"], textarea {
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 200, 0, 0.3);
+            border-color: #FFC800;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f3f4f6; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- 상세 설문 옵션 데이터 (PDF 내용 복원) ---
+        const OPTIONS = {
+            generalHealth: ['평소 건강한 편이다', '보통이다', '허약하다', '감기에 자주 걸린다', '최근 갑자기 허약해졌다'],
+            livingWith: ['아빠', '엄마', '할머니/할아버지', '형제/자매'],
+            edStyle: ['자유로운 편', '엄격한 편'],
+            healthSupplements: [
+                '홍삼을 복용한 적이 있다', '건강기능식품(비타민 등) 복용중', '독감 예방 접종 완료', 
+                '성장 주사를 맞는 중이다', '보약을 복용한 적이 있다', '한약/침치료 받은 적이 있다'
+            ],
+            diet: [
+                '언제나 식사를 즐겨한다', '식사 시간이 되면 그냥 먹는다', '억지로 먹이기 힘들다', 
+                '편식이 있다', '편식하지 않는다', '과식하는 편이다', '아침을 잘 챙겨먹지 않는다',
+                '육류를 즐겨먹는다', '탄산음료를 즐긴다', '과자, 젤리, 빵을 많이 먹는다'
+            ],
+            sleep: [
+                '혼자 잔다', '부모와 함께 잔다', '잠자리 시간이 11시 이후이다', 
+                '밤에 자다가 자주 깬다', '잠자기 직전까지 스마트폰을 본다'
+            ],
+            social: [
+                '친구와 잘 사귀는 편이다', '친구가 많다', '혼자 놀기를 좋아한다', 
+                '친구들과 트러블이 잦다', '평소에 짜증섞인 표현을 자주 한다'
+            ],
+            emotion: [
+                '무서움을 많이 탄다', '잘 우는 편이다', '낯을 심하게 가리는 편이다', 
+                '잘 흥분하는 편이다', '고집이 센 편이다', '우울하거나 불안해한다', '긴장이 심해 틱이나 긴장 증상이 있다'
+            ],
+            angryBehavior: ['말을 안한다', '물건을 던진다', '욕을 한다', '혼자 도망간다'],
+            diseaseHistory: ['지금까지 입원을 한 적이 있다', '수술을 받은 적이 있다', '아토피 피부염', '천식'],
+            
+            // 신체 증상 (레이더 차트용, 태그 제거됨)
+            sysLiver: [ // 간 (6개)
+                '쉽게 피로를 느끼고 다른 아이에 비해 잘 지친다', '눈의 피로를 잘 느끼거나 시력이 좋지 않다', 
+                '어지럼이나 두통을 가끔 호소한다', '짜증이 많고 화를 자주 낸다', 
+                '잘 넘어지거나 쉽게 삐끗하고, 자주 근육통이 있다', '코피가 자주 난다'
+            ],
+            sysHeart: [ // 심 (6개)
+                '안색이 자주 창백해 진다', '가슴이 두근거리거나 답답하다는 말을 자주 한다', 
+                '깊은 잠을 못자고 자주 깨거나, 운다', '다른 아이보다 유독 깜짝 놀라는 경우가 많다', 
+                '특정 부위로 땀을 자주 흘린다', '주의가 산만하고 집중을 잘 못한다'
+            ],
+            sysSpleen: [ // 비 (6개)
+                '안색이 누렇게 자주 뜬다', '식욕이 별로 없어 자꾸 밥을 안먹으려고 하는 편이다', 
+                '또래에 비해서 키가 작고 마른 편이다', '배가 아프다고 하거나 멀미를 자주 한다', 
+                '설사, 변비, 구토가 잦게 나타난다', '혀의 설태가 벗겨져 지도처럼 보이고 입이 자주 헌다'
+            ],
+            sysLung: [ // 폐 (5개)
+                '감기에 자주 걸리고, 약을 먹어도 잘 낫지 않는다 (1주일 이상)', '감기가 아닌데도 기침, 가래, 콧물이 잦은 편이다', 
+                '온도 변화에 민감해 추위 더위에 쉽게 지친다', '알레르기 비염, 천식 또는 편도/아데노이드 비대 진단을 받았다', 
+                '감기가 심해져 입원한 적(폐렴, 기관지염)이 있다'
+            ],
+            sysKidney: [ // 신 (5개)
+                '눈 주위가 쉽게 붓거나 다크서클이 자주 생긴다', '소변색이 유난히 짙거나, 냄새가 심하거나, 볼 때 아파한다', 
+                '머리카락 숱이 적거나 윤기가 없고 힘이 없다', '방광염, 신증, 신우신염 등 치료받은 적이 있다', 
+                '척추측만증 또는 만성요통, 무릎통증이 있다'
+            ]
+        };
+
+        const TOTAL_STEPS = 7; 
+
+        // --- UI 컴포넌트 (렌더링 최적화 및 포커스 해제 방지를 위해 App 외부로 분리) ---
+        const ProgressBar = ({ step, totalSteps }) => {
+            if (step === totalSteps) return null;
+            return (
+                <div className="flex items-center gap-2 mb-8">
+                    {[1, 2, 3, 4, 5, 6].map(s => (
+                        <div key={s} className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+                            <div className={`h-full transition-all duration-300 ${s <= step ? 'bg-primary' : ''}`}></div>
+                        </div>
+                    ))}
+                    <span className="ml-3 text-sm font-bold text-gray-400 whitespace-nowrap">{step} / {totalSteps - 1}</span>
+                </div>
+            );
+        };
+
+        const OptionBtn = ({ label, isSelected, onClick, type = "multi" }) => (
+            <button
+                onClick={onClick}
+                className={`w-full p-3 text-sm md:text-base rounded-lg border text-left transition-all duration-150 flex items-center justify-between
+                    ${isSelected 
+                        ? 'bg-primaryLight border-primary text-gray-900 font-bold shadow-sm' 
+                        : 'bg-white border-border text-textMain hover:border-primary/40 hover:bg-gray-50'
+                    }`}
+            >
+                <span>{label}</span>
+                <div className={`w-5 h-5 rounded flex items-center justify-center border ${isSelected ? 'border-primary bg-primary text-gray-900' : 'border-gray-300 bg-white text-transparent'}`}>
+                    <i className="fas fa-check text-xs"></i>
+                </div>
+            </button>
+        );
+
+        const SectionTitle = ({ title, desc }) => (
+            <div className="mb-5 border-b border-gray-100 pb-2">
+                <h3 className="text-lg font-bold text-textMain">{title}</h3>
+                {desc && <p className="text-sm text-textSub mt-1">{desc}</p>}
+            </div>
+        );
+
+        const TextInput = ({ label, value, onChange, placeholder, width="w-full" }) => (
+            <div className={`${width}`}>
+                {label && <label className="block text-sm font-semibold text-textMain mb-1.5">{label}</label>}
+                <input type="text" value={value} onChange={e => onChange(e.target.value)}
+                    placeholder={placeholder} className="w-full px-4 py-2.5 text-sm border border-border rounded-lg bg-white" />
+            </div>
+        );
+
+        function App() {
+            const [step, setStep] = useState(1);
+            const [formData, setFormData] = useState({
+                // 기본정보
+                childName: '', weight: '', height: '', mainComplaint: '', generalHealth: [],
+                // 생활환경
+                livingWith: [], livingWithOther: '', timeWithParents: '', mainCaregiver: '',
+                edStyle: [], healthSupplements: [], sideEffects: '', diseaseHistory: [], diseaseOther: '',
+                // 습관
+                diet: [], allergyFood: '', sleep: [], social: [], screenTime: '',
+                emotion: [], angryBehavior: [], playType: '',
+                // 신체증상 (계통별 배열)
+                sysLiver: [], sysHeart: [], sysSpleen: [], sysLung: [], sysKidney: []
+            });
+
+            const resultRef = useRef(null);
+            const chartCanvasRef = useRef(null);
+            let chartInstance = useRef(null);
+
+            // 자동 저장 로직
+            useEffect(() => {
+                const savedData = localStorage.getItem('pediatrics_survey_v2');
+                const savedStep = localStorage.getItem('pediatrics_step_v2');
+                if (savedData) setFormData(JSON.parse(savedData));
+                if (savedStep) setStep(parseInt(savedStep, 10));
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('pediatrics_survey_v2', JSON.stringify(formData));
+                localStorage.setItem('pediatrics_step_v2', step.toString());
+            }, [formData, step]);
+
+            // 레이더 차트 렌더링
+            useEffect(() => {
+                if (step === TOTAL_STEPS && chartCanvasRef.current) {
+                    const ctx = chartCanvasRef.current.getContext('2d');
+                    
+                    if (chartInstance.current) {
+                        chartInstance.current.destroy();
+                    }
+
+                    // 총점 6점에서 체크된 개수를 뺌 (체크를 많이 할수록 점수가 낮아져 안쪽으로 들어감)
+                    const dataScores = [
+                        Math.max(0, 6 - formData.sysLiver.length),
+                        Math.max(0, 6 - formData.sysHeart.length),
+                        Math.max(0, 6 - formData.sysSpleen.length),
+                        Math.max(0, 6 - formData.sysLung.length), // 폐는 문항이 5개지만 기준을 6으로 둠
+                        Math.max(0, 6 - formData.sysKidney.length) // 신도 문항이 5개
+                    ];
+
+                    chartInstance.current = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['간 (피로/근육)', '심 (수면/정서)', '비 (소화/영양)', '폐 (호흡기/면역)', '신 (비뇨/성장)'],
+                            datasets: [{
+                                label: '건강 활력도',
+                                data: dataScores,
+                                backgroundColor: 'rgba(255, 200, 0, 0.2)', // 해온 옐로우 투명도
+                                borderColor: 'rgba(255, 200, 0, 0.8)',
+                                pointBackgroundColor: '#FFC800',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: '#FFC800',
+                                borderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            animation: { duration: 0 }, // 캡처를 위해 애니메이션 즉시 완료
+                            scales: {
+                                r: {
+                                    angleLines: { color: '#f3f4f6' },
+                                    grid: { color: '#e5e7eb' },
+                                    min: 0,
+                                    max: 6,
+                                    ticks: {
+                                        stepSize: 1,
+                                        display: false // 숫자 숨김
+                                    },
+                                    pointLabels: {
+                                        font: { size: 13, family: 'Pretendard', weight: '600' },
+                                        color: '#4b5563'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `활력 점수: ${context.raw} / 6`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                return () => {
+                    if (chartInstance.current) {
+                        chartInstance.current.destroy();
+                    }
+                };
+            }, [step, formData]);
+
+
+            const handleNext = () => {
+                if (step === 1 && (!formData.childName.trim() || !formData.mainComplaint.trim())) {
+                    alert('아이 이름과 가장 불편한 증상을 입력해주세요.');
+                    return;
+                }
+                if (step < TOTAL_STEPS) {
+                    window.scrollTo(0, 0);
+                    setStep(prev => prev + 1);
+                }
+            };
+
+            const handlePrev = () => {
+                if (step > 1) {
+                    window.scrollTo(0, 0);
+                    setStep(prev => prev - 1);
+                }
+            };
+
+            const handleReset = () => {
+                if (confirm('작성 중인 내용을 지우고 처음부터 다시 시작하시겠습니까?')) {
+                    setFormData({
+                        childName: '', weight: '', height: '', mainComplaint: '', generalHealth: [],
+                        livingWith: [], livingWithOther: '', timeWithParents: '', mainCaregiver: '',
+                        edStyle: [], healthSupplements: [], sideEffects: '', diseaseHistory: [], diseaseOther: '',
+                        diet: [], allergyFood: '', sleep: [], social: [], screenTime: '',
+                        emotion: [], angryBehavior: [], playType: '',
+                        sysLiver: [], sysHeart: [], sysSpleen: [], sysLung: [], sysKidney: []
+                    });
+                    setStep(1);
+                    localStorage.removeItem('pediatrics_survey_v2');
+                    localStorage.removeItem('pediatrics_step_v2');
+                }
+            };
+
+            const toggleMultiSelect = (field, value) => {
+                setFormData(prev => {
+                    const currentList = prev[field];
+                    if (currentList.includes(value)) {
+                        return { ...prev, [field]: currentList.filter(item => item !== value) };
+                    } else {
+                        return { ...prev, [field]: [...currentList, value] };
+                    }
+                });
+            };
+
+            const setSingleSelect = (field, value) => {
+                setFormData(prev => ({ ...prev, [field]: [value] }));
+            };
+
+            // 이미지 저장
+            const downloadImage = async () => {
+                if (!resultRef.current) return;
+                try {
+                    const canvas = await html2canvas(resultRef.current, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+                    const link = document.createElement('a');
+                    link.download = `${formData.childName || '환자'}_문진결과.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                } catch (error) {
+                    alert('이미지 저장 중 오류가 발생했습니다.');
+                    console.error(error);
+                }
+            };
+
+            // --- 단계별 렌더링 ---
+            const renderStep = () => {
+                switch (step) {
+                    case 1:
+                        return (
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="text-left mb-6">
+                                    <h2 className="text-2xl font-bold text-textMain">기본 정보 및 주증상</h2>
+                                    <p className="text-sm text-textSub mt-1">아이의 평생 건강 기틀을 다지기 위한 소중한 자료입니다.</p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <TextInput label="아이 이름 *" value={formData.childName} onChange={v => setFormData({...formData, childName: v})} placeholder="이름 입력" />
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <TextInput label="체중 (kg)" value={formData.weight} onChange={v => setFormData({...formData, weight: v})} placeholder="예: 35" />
+                                        <TextInput label="키 (cm)" value={formData.height} onChange={v => setFormData({...formData, height: v})} placeholder="예: 140" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-textMain mb-1.5">가장 불편한 증상을 자세히 알려주세요 *</label>
+                                    <textarea value={formData.mainComplaint} onChange={e => setFormData({...formData, mainComplaint: e.target.value})}
+                                        placeholder="예: 밥을 잘 안먹고 감기를 달고 살아요." rows="3"
+                                        className="w-full px-4 py-3 text-sm border border-border rounded-lg resize-none"></textarea>
+                                </div>
+                                <div className="mt-4">
+                                    <SectionTitle title="평소 건강 상태" desc="가장 가까운 상태 하나를 선택하세요." />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                                        {OPTIONS.generalHealth.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.generalHealth.includes(item)} onClick={() => setSingleSelect('generalHealth', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 2:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionTitle title="생활 환경" />
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                                        {OPTIONS.livingWith.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.livingWith.includes(item)} onClick={() => toggleMultiSelect('livingWith', item)} />
+                                        ))}
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 bg-gray-50 p-5 rounded-lg border border-gray-100">
+                                        <TextInput label="기타 동거인" value={formData.livingWithOther} onChange={v => setFormData({...formData, livingWithOther: v})} placeholder="직접 입력" />
+                                        <TextInput label="자녀와 함께 지내는 시간" value={formData.timeWithParents} onChange={v => setFormData({...formData, timeWithParents: v})} placeholder="예: 4시간/일" />
+                                        <TextInput label="주 양육자" value={formData.mainCaregiver} onChange={v => setFormData({...formData, mainCaregiver: v})} placeholder="예: 엄마, 할머니" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <SectionTitle title="교육 방식 및 병력/예방" />
+                                    <div className="grid lg:grid-cols-4 gap-6 mb-5">
+                                        <div className="lg:col-span-1">
+                                            <label className="text-sm font-semibold block mb-2">교육 방식</label>
+                                            <div className="grid grid-cols-1 gap-3">
+                                                {OPTIONS.edStyle.map(item => (
+                                                    <OptionBtn key={item} label={item} isSelected={formData.edStyle.includes(item)} onClick={() => setSingleSelect('edStyle', item)} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="lg:col-span-3">
+                                            <label className="text-sm font-semibold block mb-2">건강증진/예방 및 병력 (다중선택)</label>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                {[...OPTIONS.healthSupplements, ...OPTIONS.diseaseHistory].map(item => (
+                                                    <OptionBtn key={item} label={item} isSelected={
+                                                        formData.healthSupplements.includes(item) || formData.diseaseHistory.includes(item)
+                                                    } onClick={() => {
+                                                        if(OPTIONS.healthSupplements.includes(item)) toggleMultiSelect('healthSupplements', item);
+                                                        else toggleMultiSelect('diseaseHistory', item);
+                                                    }} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid md:grid-cols-2 gap-5 mt-2">
+                                        <TextInput label="부작용 경험 (양/한약, 건기식 등)" value={formData.sideEffects} onChange={v => setFormData({...formData, sideEffects: v})} placeholder="있다면 증상을 적어주세요" />
+                                        <TextInput label="기타 유전/특이 질환" value={formData.diseaseOther} onChange={v => setFormData({...formData, diseaseOther: v})} placeholder="상세 질환명 입력" />
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 3:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionTitle title="식사 습관" desc="해당되는 것을 모두 선택하세요." />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
+                                        {OPTIONS.diet.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.diet.includes(item)} onClick={() => toggleMultiSelect('diet', item)} />
+                                        ))}
+                                    </div>
+                                    <TextInput label="알레르기 유발 음식" value={formData.allergyFood} onChange={v => setFormData({...formData, allergyFood: v})} placeholder="예: 땅콩, 복숭아, 우유" width="w-full md:w-1/2" />
+                                </div>
+                                <div>
+                                    <SectionTitle title="수면 습관" desc="해당되는 것을 모두 선택하세요." />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                                        {OPTIONS.sleep.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sleep.includes(item)} onClick={() => toggleMultiSelect('sleep', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 4:
+                        return (
+                            <div className="space-y-8 animate-fade-in">
+                                <div>
+                                    <SectionTitle title="사회성 및 놀이" />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-5">
+                                        {OPTIONS.social.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.social.includes(item)} onClick={() => toggleMultiSelect('social', item)} />
+                                        ))}
+                                    </div>
+                                    <div className="grid md:grid-cols-2 gap-5">
+                                        <TextInput label="스마트폰/PC 사용 시간" value={formData.screenTime} onChange={v => setFormData({...formData, screenTime: v})} placeholder="예: 2시간/일" />
+                                        <TextInput label="주로 하는 놀이 활동" value={formData.playType} onChange={v => setFormData({...formData, playType: v})} placeholder="예: 레고, 축구, 그림그리기" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <SectionTitle title="정서 상태" desc="해당되는 것을 모두 선택하세요." />
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
+                                        {OPTIONS.emotion.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.emotion.includes(item)} onClick={() => toggleMultiSelect('emotion', item)} />
+                                        ))}
+                                    </div>
+                                    <label className="text-sm font-semibold block mb-2 mt-4 text-primary">화가 나면 주로 어떻게 하나요?</label>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        {OPTIONS.angryBehavior.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.angryBehavior.includes(item)} onClick={() => toggleMultiSelect('angryBehavior', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 5:
+                        return (
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="text-left mb-6">
+                                    <h2 className="text-xl font-bold text-textMain">신체 증상 파악 (1/2)</h2>
+                                    <p className="text-sm text-textSub mt-1">평소 자주 호소하거나 관찰되는 증상을 편하게 선택해주세요. 진단에 큰 도움이 됩니다.</p>
+                                </div>
+                                <div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {OPTIONS.sysLiver.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysLiver.includes(item)} onClick={() => toggleMultiSelect('sysLiver', item)} />
+                                        ))}
+                                        {OPTIONS.sysHeart.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysHeart.includes(item)} onClick={() => toggleMultiSelect('sysHeart', item)} />
+                                        ))}
+                                        {OPTIONS.sysSpleen.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysSpleen.includes(item)} onClick={() => toggleMultiSelect('sysSpleen', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 6:
+                        return (
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="text-left mb-6">
+                                    <h2 className="text-xl font-bold text-textMain">신체 증상 파악 (2/2)</h2>
+                                    <p className="text-sm text-textSub mt-1">평소 자주 호소하거나 관찰되는 증상을 편하게 선택해주세요.</p>
+                                </div>
+                                <div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {OPTIONS.sysLung.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysLung.includes(item)} onClick={() => toggleMultiSelect('sysLung', item)} />
+                                        ))}
+                                        {OPTIONS.sysKidney.map(item => (
+                                            <OptionBtn key={item} label={item} isSelected={formData.sysKidney.includes(item)} onClick={() => toggleMultiSelect('sysKidney', item)} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 7:
+                        return (
+                            <div className="animate-fade-in">
+                                <div className="text-center mb-8">
+                                    <h2 className="text-2xl font-bold text-textMain">문진이 완료되었습니다</h2>
+                                    <p className="text-sm text-textSub mt-2">아래의 종합 차트와 요약을 확인 후 의료진에게 보여주세요.</p>
+                                </div>
+
+                                {/* 캡처용 컨테이너 (좌우 분할 와이드 레이아웃) */}
+                                <div ref={resultRef} className="bg-white border border-border rounded-xl p-8 mb-8 shadow-sm w-full">
+                                    <div className="flex justify-between items-end border-b-2 border-primary pb-4 mb-6">
+                                        <h3 className="text-xl font-bold text-primary">진료 요약 리포트</h3>
+                                        <span className="text-base font-semibold text-textMain">{formData.childName} ({formData.height || '-'}cm, {formData.weight || '-'}kg)</span>
+                                    </div>
+
+                                    <div className="flex flex-col lg:flex-row gap-8">
+                                        
+                                        {/* 왼쪽: 주요 증상 및 레이더 차트 */}
+                                        <div className="lg:w-2/5 flex flex-col gap-6">
+                                            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                                                <span className="font-bold text-gray-500 block mb-2 text-sm">가장 불편한 증상</span>
+                                                <p className="font-semibold text-lg text-primaryHover leading-relaxed">{formData.mainComplaint}</p>
+                                            </div>
+                                            <div className="w-full max-w-sm mx-auto aspect-square relative bg-white rounded-xl border border-gray-50 p-4">
+                                                <canvas ref={chartCanvasRef}></canvas>
+                                            </div>
+                                        </div>
+
+                                        {/* 오른쪽: 상세 문진 내역 */}
+                                        <div className="lg:w-3/5">
+                                            <h4 className="font-bold text-gray-700 mb-4 border-b border-gray-200 pb-2">
+                                                <i className="fas fa-list-ul mr-2 text-primary"></i>상세 체크 내용
+                                            </h4>
+                                            
+                                            <div className="space-y-4">
+                                                {/* 기본 건강 및 환경 */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-100">
+                                                    <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">평소 건강</span><span className="text-sm font-medium text-textMain">{formData.generalHealth.join(', ') || '-'}</span></div>
+                                                    <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">교육 방식</span><span className="text-sm font-medium text-textMain">{formData.edStyle.join(', ') || '-'}</span></div>
+                                                    <div className="flex flex-col md:col-span-2"><span className="text-xs font-bold text-gray-400 mb-1">동거 가족 및 양육자</span><span className="text-sm font-medium text-textMain">{[...formData.livingWith, formData.livingWithOther ? `기타(${formData.livingWithOther})` : ''].filter(Boolean).join(', ')} / 주 양육자: {formData.mainCaregiver || '-'} (부모와 {formData.timeWithParents || '-'}시간)</span></div>
+                                                </div>
+
+                                                {/* 병력 및 예방 */}
+                                                <div className="pb-4 border-b border-gray-100">
+                                                    <div className="flex flex-col mb-3"><span className="text-xs font-bold text-gray-400 mb-1">건강증진 및 병력</span><span className="text-sm font-medium text-textMain">{[...formData.healthSupplements, ...formData.diseaseHistory].join(', ') || '-'}</span></div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">부작용 경험</span><span className="text-sm font-medium text-textMain">{formData.sideEffects || '-'}</span></div>
+                                                        <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">특이 질환</span><span className="text-sm font-medium text-textMain">{formData.diseaseOther || '-'}</span></div>
+                                                    </div>
+                                                </div>
+
+                                                {/* 식사 및 수면 */}
+                                                <div className="pb-4 border-b border-gray-100">
+                                                    <div className="flex flex-col mb-3"><span className="text-xs font-bold text-gray-400 mb-1">식사 습관 및 알레르기</span><span className="text-sm font-medium text-textMain">{formData.diet.join(', ') || '-'} / 알레르기: {formData.allergyFood || '없음'}</span></div>
+                                                    <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">수면 습관</span><span className="text-sm font-medium text-textMain">{formData.sleep.join(', ') || '-'}</span></div>
+                                                </div>
+
+                                                {/* 사회성 및 정서 */}
+                                                <div className="pb-4 border-b border-gray-100">
+                                                    <div className="flex flex-col mb-3"><span className="text-xs font-bold text-gray-400 mb-1">사회성 및 미디어/놀이</span><span className="text-sm font-medium text-textMain">{formData.social.join(', ') || '-'} / {formData.playType ? `주 놀이: ${formData.playType}` : ''} (미디어: {formData.screenTime || '-'})</span></div>
+                                                    <div className="flex flex-col"><span className="text-xs font-bold text-gray-400 mb-1">정서 상태 및 화날 때 반응</span><span className="text-sm font-medium text-textMain">{formData.emotion.join(', ') || '-'} / 화날 때: {formData.angryBehavior.join(', ') || '-'}</span></div>
+                                                </div>
+
+                                                {/* 오장 증상 상세 */}
+                                                <div>
+                                                    <span className="text-xs font-bold text-gray-400 mb-2 block">계통별 상세 증상</span>
+                                                    <div className="space-y-2 text-sm bg-gray-50 p-4 rounded-lg">
+                                                        <div className="flex gap-3"><span className="font-bold text-primary w-8 shrink-0">간</span><span className="text-gray-700">{formData.sysLiver.join(', ') || '-'}</span></div>
+                                                        <div className="flex gap-3"><span className="font-bold text-primary w-8 shrink-0">심</span><span className="text-gray-700">{formData.sysHeart.join(', ') || '-'}</span></div>
+                                                        <div className="flex gap-3"><span className="font-bold text-primary w-8 shrink-0">비</span><span className="text-gray-700">{formData.sysSpleen.join(', ') || '-'}</span></div>
+                                                        <div className="flex gap-3"><span className="font-bold text-primary w-8 shrink-0">폐</span><span className="text-gray-700">{formData.sysLung.join(', ') || '-'}</span></div>
+                                                        <div className="flex gap-3"><span className="font-bold text-primary w-8 shrink-0">신</span><span className="text-gray-700">{formData.sysKidney.join(', ') || '-'}</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center mt-6">
+                                    <button onClick={downloadImage} className="py-4 px-8 bg-primary text-gray-900 rounded-lg font-bold hover:bg-primaryHover flex items-center justify-center gap-2 transition-colors shadow-lg text-lg">
+                                        <i className="far fa-image"></i> 결과 이미지 저장
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    default:
+                        return null;
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-6xl w-full">
+                        
+                        <div className="mb-6 flex items-center gap-3 ml-2">
+                            <div className="w-10 h-10 rounded-lg bg-primary text-gray-900 flex items-center justify-center shadow-sm">
+                                <i className="fas fa-leaf text-xl"></i>
+                            </div>
+                            <h1 className="text-xl md:text-2xl font-bold text-textMain tracking-tight">해온 한방소아청소년과</h1>
+                        </div>
+
+                        <div className="bg-surface rounded-2xl shadow-card p-6 md:p-10 min-h-[500px] flex flex-col border border-border relative">
+                            <ProgressBar step={step} totalSteps={TOTAL_STEPS} />
+
+                            <div className="flex-grow z-10">
+                                {renderStep()}
+                            </div>
+
+                            {/* 네비게이션 버튼 */}
+                            {step < TOTAL_STEPS && (
+                                <div className="mt-10 flex justify-between items-center pt-6 border-t border-gray-100 z-10">
+                                    {step > 1 ? (
+                                        <button onClick={handlePrev} className="px-6 py-3 rounded-lg text-textSub text-sm font-semibold hover:bg-gray-100 transition-colors">
+                                            <i className="fas fa-chevron-left mr-1.5"></i> 이전
+                                        </button>
+                                    ) : <div></div>}
+
+                                    <button onClick={handleNext} className="px-8 py-3 bg-textMain text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors shadow-sm flex items-center">
+                                        {step === TOTAL_STEPS - 1 ? '결과 확인' : '다음 단계'} <i className="fas fa-chevron-right ml-2"></i>
+                                    </button>
+                                </div>
+                            )}
+
+                            {step === TOTAL_STEPS && (
+                                <div className="mt-8 text-center pt-6 border-t border-gray-100 z-10">
+                                    <button onClick={handleReset} className="text-sm text-gray-400 hover:text-red-500 underline transition-colors">
+                                        처음부터 다시 작성하기
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
