@@ -1,7 +1,7 @@
 {
-  "files": 339,
-  "resource_files": 300,
-  "copied_bytes": 209501806,
+  "files": 340,
+  "resource_files": 301,
+  "copied_bytes": 215376116,
   "mapping": {
     "mps_basecamp/center.html": "center.html",
     "mps_basecamp/styles.css": "styles.css",
@@ -341,7 +341,8 @@
     "mps_basecamp/bio-report.html": "bio-report.html",
     "mps_basecamp/bio-operations.html": "bio-operations.html",
     "mps_basecamp/organization.html": "organization.html",
-    "mps_basecamp/player.html": "player.html"
+    "mps_basecamp/player.html": "player.html",
+    "@nextlocal/영주작약_스포츠뉴트리션_넥스트로컬40_중간발표.html": "resources/@nextlocal/20261001/영주작약_스포츠뉴트리션_넥스트로컬40_중간발표.html"
   },
   "unresolved_candidates": [],
   "notes": [
